@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.EnterpriseQuestionDao">
+
+    <select id="findByPage" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.Problem">
+        select * from problem ORDER BY time LIMIT #{page},#{number}
+    </select>
+
+    <delete id="deleteQuestion" parameterType="java.lang.Integer">
+        delete from problem where id = #{id}
+    </delete>
+
+</mapper>
