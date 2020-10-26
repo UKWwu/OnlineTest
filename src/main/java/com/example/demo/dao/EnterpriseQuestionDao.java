@@ -14,4 +14,8 @@ public interface EnterpriseQuestionDao {
     public List<Problem> findByPage(ReceiveEntity receiveEntity);
 
     public void deleteQuestion(Integer id);
+
+    public void addQuestion(Problem problem);
+
+    public Problem findQuestionById(Integer id);
 }

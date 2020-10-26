@@ -30,4 +30,18 @@ public class EnterpriseQuestion {
     public void deleteQuestion(@RequestBody Problem problem){
          this.enterpriseQuestionService.deleteQuestion(problem.getId());
     }
+
+    //新增问题
+    @RequestMapping(value = "/EnterpriseQuestion/addQuestion",method = RequestMethod.POST)
+    @ResponseBody
+    public void addQuestion(@RequestBody Problem problem){
+        this.enterpriseQuestionService.addQuestion(problem);
+    }
+
+    //根据Id来查询
+    @RequestMapping(value = "/EnterpriseQuestion/findQuestionById",method = RequestMethod.POST)
+    @ResponseBody
+    public Problem findQuestionById(@RequestBody Problem Problem){
+        return this.enterpriseQuestionService.findQuestionById(Problem.getId());
+    }
 }
