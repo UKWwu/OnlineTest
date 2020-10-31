@@ -6,6 +6,7 @@ import com.example.demo.entity.ReceiveEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper
@@ -18,4 +19,10 @@ public interface EnterpriseQuestionDao {
     public void addQuestion(Problem problem);
 
     public Problem findQuestionById(Integer id);
+
+    public void updateQuestion(Problem problem);
+
+    public int findQuestionNumber(String id);
+
+    public List<Problem> findQuestionByKey(ReceiveEntity keys);
 }

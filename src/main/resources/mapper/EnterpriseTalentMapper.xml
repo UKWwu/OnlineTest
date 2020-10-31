@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.EnterpriseTalentDao">
+
+    <select id="findTalentList" resultType="java.util.List"></select>
+
+    <insert id="addTalent"></insert>
+
+    <update id="updateTalent"></update>
+
+    <delete id="deleteTalent">
+        delete from talent_pool
+        where id = #{targetID}
+    </delete>
+
+    <select id="findTalentNumber" resultType="java.lang.Integer">
+        select count(*) from talent_pool
+        where unit = #{userUnit}
+    </select>
+
+    <select id="findTalent" resultType="com.example.demo.entity.talent">
+        select * from talent_pool
+        where id = #{targetID}
+    </select>
+</mapper>

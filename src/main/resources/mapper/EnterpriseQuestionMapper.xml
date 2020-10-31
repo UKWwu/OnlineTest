@@ -4,7 +4,9 @@
 
     <select id="findByPage" parameterType="com.example.demo.entity.ReceiveEntity"
             resultType="com.example.demo.entity.Problem">
-        select * from problem ORDER BY time LIMIT #{page},#{number}
+        select * from problem
+        where unit = #{userUnit}
+        ORDER BY time LIMIT #{page},#{number}
     </select>
 
     <delete id="deleteQuestion" parameterType="java.lang.Integer">
@@ -13,13 +15,54 @@
 
     <insert id="addQuestion" parameterType="com.example.demo.entity.Problem">
         insert into problem
-        (name,title,content,unit,problemType,answer,remark,time,unitName)
+        (name,title,content,unit,problemType,answer,remark,time,unitName,selectKey,type)
         VALUES
-        (#{name},#{title},#{content},#{unit},#{problemType},#{answer},#{remark},#{time},#{unitName})
+        (#{name},#{title},#{content},#{unit},#{problemType},#{answer},#{remark},#{time},#{unitName},#{selectKey},#{type})
     </insert>
 
     <select id="findQuestionById" parameterType="java.lang.Integer"
             resultType="com.example.demo.entity.Problem">
         select * from problem where id = #{id}
+    </select>
+
+    <update id="updateQuestion" parameterType="com.example.demo.entity.Problem">
+        update problem
+        set
+        name=#{name},
+        title=#{title},
+        content=#{content},
+        unit=#{unit},
+        problemType=#{problemType},
+        answer=#{answer},
+        remark=#{remark},
+        time=#{time},
+        unitName=#{unitName},
+        selectKey = #{selectKey},
+        type = #{type}
+        where
+        id = #{id}
+    </update>
+
+    <select id="findQuestionNumber" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*) from problem where unit = #{id}
+    </select>
+
+    <!--<select id="findQuestionByKey" parameterType="java.lang.String"  resultType="com.example.demo.entity.Problem">-->
+        <!--select * from problem where selectKey like #{keys}-->
+    <!--</select>-->
+
+    <select id="findQuestionByKey" parameterType="com.example.demo.entity.ReceiveEntity"  resultType="com.example.demo.entity.Problem">
+        select * from problem where name like #{remark}
+        union
+        select * from problem where title like #{remark}
+        union
+        select * from problem where content like  #{remark}
+        union
+        select * from problem where unitName like #{remark}
+        union
+        select * from problem where problemType like #{remark}
+        union
+        select * from problem where type like #{remark}
+        ORDER BY time LIMIT #{page},#{number}
     </select>
 </mapper>

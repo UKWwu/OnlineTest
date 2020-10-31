@@ -13,4 +13,10 @@ public interface EnterpriseQuestionService {
     public void addQuestion(Problem problem);
 
     public Problem findQuestionById(Integer id);
+
+    public void updateQuestion(Problem problem);
+
+    public int findQuestionNumber(ReceiveEntity unit);
+
+    public List findQuestionByKey(ReceiveEntity body);
 }

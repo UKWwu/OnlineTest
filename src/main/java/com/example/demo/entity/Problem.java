@@ -21,6 +21,10 @@ public class Problem {
     //最近修改时间
     private Date time;
 
+    private String selectKey;
+
+    private String type;
+
     public String getName() {
         return name;
     }
@@ -100,5 +104,21 @@ public class Problem {
 
     public void setProblemType(String problemType) {
         this.problemType = problemType;
+    }
+
+    public String getSelectKey() {
+        return selectKey;
+    }
+
+    public void setSelectKey(String selectKey) {
+        this.selectKey = selectKey;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

@@ -3,7 +3,11 @@
 <mapper namespace="com.example.demo.dao.EnterpriseDao">
 
     <select id="getUnitByName" parameterType="java.lang.String" resultType="java.lang.String">
-        select id from enterprise where name = #{name}
+        select userUnit from user where userName = #{userName}
+    </select>
+
+    <select id="getUnitID" parameterType="java.lang.String" resultType="java.lang.String">
+        select name from enterprise where id = #{id}
     </select>
 
 </mapper>

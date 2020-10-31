@@ -44,4 +44,25 @@ public class EnterpriseQuestion {
     public Problem findQuestionById(@RequestBody Problem Problem){
         return this.enterpriseQuestionService.findQuestionById(Problem.getId());
     }
+
+    //更新问题
+    @RequestMapping(value = "/EnterpriseQuestion/updateQuestion",method = RequestMethod.POST)
+    @ResponseBody
+    public void updateQuestion(@RequestBody Problem Problem){
+        this.enterpriseQuestionService.updateQuestion(Problem);
+    }
+
+    //查询条数
+    @RequestMapping(value = "/EnterpriseQuestion/findQuestionNumber",method = RequestMethod.POST)
+    @ResponseBody
+    public int findQuestionNumber(@RequestBody ReceiveEntity unit){
+        return this.enterpriseQuestionService.findQuestionNumber(unit);
+    }
+
+    //根据关键字查询
+    @RequestMapping(value = "/EnterpriseQuestion/findQuestionByKey",method = RequestMethod.POST)
+    @ResponseBody
+    public List findQuestionByKey(@RequestBody ReceiveEntity body){
+        return this.enterpriseQuestionService.findQuestionByKey(body);
+    }
 }

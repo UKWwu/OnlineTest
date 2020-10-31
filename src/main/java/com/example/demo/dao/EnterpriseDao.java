@@ -8,4 +8,6 @@ import org.springframework.stereotype.Component;
 public interface EnterpriseDao {
     //根据名字获取单位ID
     public String getUnitByName(String name);
+
+    String getUnitID(String id);
 }

@@ -23,6 +23,7 @@ public class EnterpriseQuestionServiceImp implements EnterpriseQuestionService {
 
     public List findByPage(ReceiveEntity receiveEntity){
         receiveEntity.page = (receiveEntity.page-1)*10;
+        receiveEntity.userUnit = this.getUnitByName(receiveEntity.userName);
         return this.enterpriseQuestionDao.findByPage(receiveEntity);
     }
 
@@ -31,15 +32,58 @@ public class EnterpriseQuestionServiceImp implements EnterpriseQuestionService {
     }
     public void addQuestion(Problem problem){
         problem.setUnit(this.getUnitByName(problem.getUnitName()));
+        problem.setUnitName(this.getUnitNameById(problem.getUnit()));
         problem.setTime(new Date());
+//        problem.setSelectKey(this.getALLkey(problem));
         this.enterpriseQuestionDao.addQuestion(problem);
     }
 
+    public void updateQuestion(Problem problem){
+        problem.setUnit(this.getUnitByName(problem.getUnitName()));
+        problem.setUnitName(this.getUnitNameById(problem.getUnit()));
+        problem.setTime(new Date());
+//        problem.setSelectKey(this.getALLkey(problem));
+        this.enterpriseQuestionDao.updateQuestion(problem);
+    }
+
+    //获取当前角色的单位
     public String getUnitByName(String name){
         return this.enterpriseDao.getUnitByName(name);
     }
 
+    //获取当前角色的单位名称
+    public String getUnitNameById(String id){
+        return this.enterpriseDao.getUnitID(id);
+    }
+
     public Problem findQuestionById(Integer id){
         return this.enterpriseQuestionDao.findQuestionById(id);
+    }
+
+
+
+    public int findQuestionNumber(ReceiveEntity unit){
+        String unitName = unit.getUserName();
+        String id = this.getUnitByName(unitName);
+        return this.enterpriseQuestionDao.findQuestionNumber(id);
+    }
+
+    public List findQuestionByKey(ReceiveEntity body){
+        //根据remark进行查询
+        String[] keys = body.remark.split("\\+");
+        body.remark = "%"+body.remark+"%";
+        body.page = (body.page-1)*10;
+        return this.enterpriseQuestionDao.findQuestionByKey(body);
+    }
+
+    public String getALLkey(Problem problem){
+        String key = "";
+        key += problem.getName();
+        key += problem.getUnitName();
+        key += problem.getTitle();
+        key += problem.getContent();
+        key += problem.getProblemType();
+        key += problem.getType();
+        return key;
     }
 }
