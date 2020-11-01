@@ -6,7 +6,7 @@
             resultType="com.example.demo.entity.Problem">
         select * from problem
         where unit = #{userUnit}
-        ORDER BY time LIMIT #{page},#{number}
+        ORDER BY time desc LIMIT #{page},#{number}
     </select>
 
     <delete id="deleteQuestion" parameterType="java.lang.Integer">
@@ -57,7 +57,7 @@
         select * from problem where title like #{remark}
         union
         select * from problem where content like  #{remark}
-        union
+         union
         select * from problem where unitName like #{remark}
         union
         select * from problem where problemType like #{remark}

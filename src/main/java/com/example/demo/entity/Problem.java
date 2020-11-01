@@ -9,6 +9,10 @@ public class Problem {
     private String title;
     //选项
     private String content;
+    private String contentA;
+    private String contentB;
+    private String contentC;
+    private String contentD;
     //单位
     private String unit;
     private String unitName;
@@ -120,5 +124,37 @@ public class Problem {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getContentA() {
+        return contentA;
+    }
+
+    public void setContentA(String contentA) {
+        this.contentA = contentA;
+    }
+
+    public String getContentB() {
+        return contentB;
+    }
+
+    public void setContentB(String contentB) {
+        this.contentB = contentB;
+    }
+
+    public String getContentC() {
+        return contentC;
+    }
+
+    public void setContentC(String contentC) {
+        this.contentC = contentC;
+    }
+
+    public String getContentD() {
+        return contentD;
+    }
+
+    public void setContentD(String contentD) {
+        this.contentD = contentD;
     }
 }

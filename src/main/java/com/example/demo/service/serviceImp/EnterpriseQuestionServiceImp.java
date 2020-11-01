@@ -57,7 +57,13 @@ public class EnterpriseQuestionServiceImp implements EnterpriseQuestionService {
     }
 
     public Problem findQuestionById(Integer id){
-        return this.enterpriseQuestionDao.findQuestionById(id);
+        Problem problem = this.enterpriseQuestionDao.findQuestionById(id);
+        String[] lists = problem.getContent().split("&|&");
+        problem.setContentA(lists[0]);
+        problem.setContentB(lists[2]);
+        problem.setContentC(lists[4]);
+        problem.setContentD(lists[6]);
+        return problem;
     }
 
 

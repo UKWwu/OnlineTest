@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.ReceiveEntity;
-import com.example.demo.entity.talent;
+import com.example.demo.entity.Talent;
 import com.example.demo.service.EnterpriseTalentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,23 +24,23 @@ public class EnterpriseTalent {
         return this.enterpriseTalentService.findTalentList(receiveEntity);
     }
     @RequestMapping("/addTalent")
-    public void addTalent(@RequestBody talent talent){
+    public void addTalent(@RequestBody Talent talent){
         this.enterpriseTalentService.addTalent(talent);
     }
     @RequestMapping("/updateTalent")
-    public void updateTalent(@RequestBody talent talent){
+    public void updateTalent(@RequestBody Talent talent){
         this.enterpriseTalentService.updateTalent(talent);
     }
     @RequestMapping("/deleteTalent")
     public void deleteTalent(@RequestBody ReceiveEntity receiveEntity){
-        deleteTalent(receiveEntity);
+        this.enterpriseTalentService.deleteTalent(receiveEntity);
     }
     @RequestMapping("/findTalentNumber")
     public Integer findTalentNumber(@RequestBody ReceiveEntity receiveEntity){
-        return findTalentNumber(receiveEntity);
+        return this.enterpriseTalentService.findTalentNumber(receiveEntity);
     }
     @RequestMapping("/findTalent")
-    public talent findTalent(@RequestBody ReceiveEntity receiveEntity){
-        return this.findTalent(receiveEntity);
+    public Talent findTalent(@RequestBody ReceiveEntity receiveEntity){
+        return this.enterpriseTalentService.findTalent(receiveEntity);
     }
 }

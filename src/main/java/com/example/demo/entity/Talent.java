@@ -1,6 +1,8 @@
 package com.example.demo.entity;
 
-public class talent {
+import java.util.Date;
+
+public class Talent {
     private Integer id;
     private String name;
     private String unit;
@@ -8,6 +10,12 @@ public class talent {
     private String education;
     private String school;
     private String grade;
+    private String selectKey;
+    private String remark;
+    private Date time;
+    private String userName;
+    private Integer testId;
+    private String testName;
 
     public Integer getId() {
         return id;
@@ -63,5 +71,53 @@ public class talent {
 
     public void setGrade(String grade) {
         this.grade = grade;
+    }
+
+    public String getSelectKey() {
+        return selectKey;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public void setSelectKey(String selectKey) {
+        this.selectKey = selectKey;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Integer getTestId() {
+        return testId;
+    }
+
+    public void setTestId(Integer testId) {
+        this.testId = testId;
+    }
+
+    public String getTestName() {
+        return testName;
+    }
+
+    public void setTestName(String testName) {
+        this.testName = testName;
     }
 }

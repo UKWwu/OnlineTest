@@ -24,6 +24,10 @@ public class ReceiveEntity {
     //目标查询的id
     public Integer targetID;
 
+    public Integer max;
+
+    public Integer min;
+
     public Object getObject() {
         return object;
     }
@@ -94,5 +98,21 @@ public class ReceiveEntity {
 
     public void setTargetID(Integer targetID) {
         this.targetID = targetID;
+    }
+
+    public Integer getMax() {
+        return max;
+    }
+
+    public void setMax(Integer max) {
+        this.max = max;
+    }
+
+    public Integer getMin() {
+        return min;
+    }
+
+    public void setMin(Integer min) {
+        this.min = min;
     }
 }

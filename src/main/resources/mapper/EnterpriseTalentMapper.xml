@@ -2,23 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.demo.dao.EnterpriseTalentDao">
 
-    <select id="findTalentList" resultType="java.util.List"></select>
+    <select id="findTalentList" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.Talent">
+        select * from talent_pool
+        where unit = #{userUnit} and selectKey like #{remark}
+        ORDER BY time desc LIMIT #{page},#{number}
+    </select>
 
-    <insert id="addTalent"></insert>
+    <insert id="addTalent">
+        insert into talent_pool
+        (name,unit,sex,education,school,grade,remark,selectKey,time)
+        VALUES
+        (#{name},#{unit},#{sex},#{education},#{school},#{grade},#{remark},#{selectKey},#{time})
+    </insert>
 
-    <update id="updateTalent"></update>
+    <update id="updateTalent">
+        update talent_pool
+        set
+        name=#{name},
+        unit=#{unit},
+        sex=#{sex},
+        remark=#{remark},
+        education=#{education},
+        school=#{school},
+        grade = #{grade},
+        selectKey = #{selectKey},
+        time = #{time}
+        where
+        id = #{id}
+    </update>
 
     <delete id="deleteTalent">
         delete from talent_pool
         where id = #{targetID}
     </delete>
 
-    <select id="findTalentNumber" resultType="java.lang.Integer">
+    <select id="findTalentNumber" parameterType="com.example.demo.entity.ReceiveEntity" resultType="java.lang.Integer">
         select count(*) from talent_pool
-        where unit = #{userUnit}
+        where unit = #{userUnit} and selectKey like #{remark}
     </select>
 
-    <select id="findTalent" resultType="com.example.demo.entity.talent">
+    <select id="findTalent" resultType="com.example.demo.entity.Talent">
         select * from talent_pool
         where id = #{targetID}
     </select>

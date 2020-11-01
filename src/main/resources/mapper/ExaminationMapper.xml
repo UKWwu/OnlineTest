@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.ExaminationDao">
+
+    <select id="findFiveByTestId" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.Talent">
+        select * from talent_pool
+        where
+        testId = #{targetID}
+        ORDER BY cast(grade as UNSIGNED INTEGER) desc LIMIT 0,5
+    </select>
+
+    <select id="findRatioById" parameterType="com.example.demo.entity.ReceiveEntity" resultType="java.lang.Integer">
+        select count(*) from talent_pool
+        where
+        testId = #{targetID}
+        and grade >= #{min}
+        and grade <![CDATA[<]]> #{max}
+    </select>
+
+    <select id="findExamination" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.Examination">
+        select * from examination
+        where unit = #{userUnit}
+        ORDER BY beginTime desc LIMIT #{page},#{number}
+    </select>
+
+    <select id="findExaminationNumber" parameterType="com.example.demo.entity.ReceiveEntity" resultType="java.lang.Integer">
+        select count(*) from examination
+        where unit = #{userUnit}
+    </select>
+
+    <update id="finishExam" parameterType="com.example.demo.entity.ReceiveEntity">
+        update examination
+        set
+        status=#{remark}
+        where
+        id = #{targetID}
+    </update>
+
+
+</mapper>
