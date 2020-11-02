@@ -1,9 +1,7 @@
 package com.example.demo.dao;
 
 
-import com.example.demo.entity.Examination;
-import com.example.demo.entity.ReceiveEntity;
-import com.example.demo.entity.Talent;
+import com.example.demo.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -22,4 +20,10 @@ public interface ExaminationDao {
     public void finishExam(ReceiveEntity receiveEntity);
 
     public Integer findExaminationNumber(ReceiveEntity receiveEntity);
+
+    public void addExamination(Examination examination);
+
+    public List<User> findExamUser(ReceiveEntity receiveEntity);
+
+    public void addExaminee(UserAndExam userAndExam);
 }

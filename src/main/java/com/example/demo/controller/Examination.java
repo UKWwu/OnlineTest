@@ -48,4 +48,22 @@ public class Examination {
     public Integer findExaminationNumber(@RequestBody ReceiveEntity receiveEntity){
         return this.examinationService.findExaminationNumber(receiveEntity);
     }
+
+    //查询条数
+    @RequestMapping("/addExamination")
+    public com.example.demo.entity.Examination addExamination(@RequestBody com.example.demo.entity.Examination examination){
+        return this.examinationService.addExamination(examination);
+    }
+
+    //查询符合条件的候选人
+    @RequestMapping("/findExamUser")
+    public List findExamUser(@RequestBody ReceiveEntity receiveEntity){
+        return this.examinationService.findExamUser(receiveEntity);
+    }
+
+    //新增
+    @RequestMapping("/addExaminee")
+    public void addExaminee(@RequestBody ReceiveEntity receiveEntity){
+         this.examinationService.addExaminee(receiveEntity);
+    }
 }

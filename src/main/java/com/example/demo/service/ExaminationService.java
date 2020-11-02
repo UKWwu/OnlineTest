@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Examination;
 import com.example.demo.entity.ReceiveEntity;
 
 import java.util.List;
@@ -15,4 +16,10 @@ public interface ExaminationService {
     public void finishExam(ReceiveEntity receiveEntity);
 
     public Integer findExaminationNumber(ReceiveEntity receiveEntity);
+
+    public Examination addExamination(Examination examination);
+
+    public List findExamUser(ReceiveEntity receiveEntity);
+
+    public void addExaminee(ReceiveEntity receiveEntity);
 }

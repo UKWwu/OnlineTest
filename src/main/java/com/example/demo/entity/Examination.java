@@ -13,6 +13,7 @@ public class Examination {
     private Integer questionNumber;
     private Date continueTime;
     private Date endTime;
+    private String userName;
 
     public Integer getId() {
         return id;
@@ -92,5 +93,13 @@ public class Examination {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

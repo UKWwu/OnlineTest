@@ -36,5 +36,24 @@
         id = #{targetID}
     </update>
 
+    <insert id="addExamination" useGeneratedKeys="true" keyProperty="id" parameterType="com.example.demo.entity.Examination">
+        insert into examination
+        (name,beginTime,status,type,unit,continueTime,remark,endTime,questionNumber)
+        VALUES
+        (#{name},#{beginTime},#{status},#{type},#{unit},#{continueTime},#{remark},#{endTime},#{questionNumber})
+    </insert>
+
+    <select id="findExamUser" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.User">
+        select * from user
+        where userUnit = #{userUnit} and userType = 4
+    </select>
+
+    <insert id="addExaminee" parameterType="com.example.demo.entity.UserAndExam">
+        insert into test_person
+        (userId,examinationId,beginTime,continueTime,endTime,userName)
+        value
+        (#{userId},#{examinationId},#{beginTime},#{continueTime},#{endTime},#{userName})
+    </insert>
+
 
 </mapper>

@@ -1,5 +1,7 @@
 package com.example.demo.service.serviceImp;
 
+import com.example.demo.entity.UserAndExam;
+import com.example.demo.entity.Examination;
 import com.example.demo.dao.EnterpriseDao;
 import com.example.demo.dao.ExaminationDao;
 import com.example.demo.entity.ReceiveEntity;
@@ -69,4 +71,23 @@ public class ExaminationServiceImp implements ExaminationService {
         return this.examinationDao.findExaminationNumber(receiveEntity);
     }
 
+    public Examination addExamination(Examination examination){
+        examination.setUnit(this.getUnitByName(examination.getUserName()));
+        this.examinationDao.addExamination(examination);
+        return examination;
+    }
+    public List findExamUser(ReceiveEntity receiveEntity){
+        receiveEntity.setUserUnit(this.getUnitByName(receiveEntity.getUserName()));
+        return this.examinationDao.findExamUser(receiveEntity);
+    }
+
+    public void addExaminee(ReceiveEntity receiveEntity){
+        List temp = (List) receiveEntity.getObject();
+        for (int i = 0; i < temp.size(); i++) {
+            UserAndExam userAndExam = new UserAndExam();
+            userAndExam.setUserId((Integer) temp.get(i));
+            userAndExam.setExaminationId(receiveEntity.getTargetID());
+            this.examinationDao.addExaminee(userAndExam);
+        }
+    }
 }

@@ -5,6 +5,7 @@ public class User {
     private String userName;
     private String password;
     private String userType;
+    private String userTypeName;
     private String userAccount;
 
     public Integer getId() {
@@ -45,5 +46,13 @@ public class User {
 
     public void setUserAccount(String userAccount) {
         this.userAccount = userAccount;
+    }
+
+    public String getUserTypeName() {
+        return userTypeName;
+    }
+
+    public void setUserTypeName(String userTypeName) {
+        this.userTypeName = userTypeName;
     }
 }
