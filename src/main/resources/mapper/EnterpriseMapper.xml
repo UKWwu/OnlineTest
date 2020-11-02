@@ -10,4 +10,15 @@
         select name from enterprise where id = #{id}
     </select>
 
+    <select id="findAllEnterprise" resultType="com.example.demo.entity.Enterprise">
+        select * from enterprise
+    </select>
+
+    <update id="changeRecommend" parameterType="com.example.demo.entity.Enterprise">
+         update enterprise
+          set
+          recommend = #{recommend}
+          where
+          id = #{id}
+    </update>
 </mapper>

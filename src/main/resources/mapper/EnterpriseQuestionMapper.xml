@@ -65,4 +65,26 @@
         select * from problem where type like #{remark}
         ORDER BY time LIMIT #{page},#{number}
     </select>
+
+    <select id="findAN" resultType="java.lang.Integer">
+        select count(*) from problem
+        where unit = -1 and selectKey like #{remark}
+    </select>
+
+    <select id="findEN" resultType="java.lang.Integer">
+        select count(*) from problem
+        where unit != -1 and selectKey like #{remark}
+    </select>
+
+    <select id="findAQ" resultType="com.example.demo.entity.Problem">
+        select * from problem
+        where unit = -1 and selectKey like #{remark}
+        ORDER BY time desc LIMIT #{page},#{number}
+    </select>
+
+    <select id="findEQ" resultType="com.example.demo.entity.Problem">
+        select * from problem
+        where unit != -1 and selectKey like #{remark}
+        ORDER BY time desc LIMIT #{page},#{number}
+    </select>
 </mapper>

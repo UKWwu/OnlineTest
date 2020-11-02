@@ -8,4 +8,44 @@
         userAccount = #{userAccount} and password = #{password}
     </select>
 
+    <select id="finUserList" resultType="com.example.demo.entity.User">
+        select * from user
+        where selectKey like #{remark}
+        ORDER BY id LIMIT #{page},#{number}
+    </select>
+    <insert id="addUser">
+        insert into user
+        (userAccount,userName,userUnit,password,userTel,userEmai,userType,userTypeName,selectKey,remark,time)
+        value
+        (#{userAccount},#{userName},#{userUnit},#{password},#{userTel},#{userEmai},#{userType},#{userTypeName},#{selectKey},#{remark},#{time})
+    </insert>
+    <update id="updateUser">
+        update user
+        set
+        userAccount=#{userAccount},
+        userName=#{userName},
+        password=#{password},
+        userUnit = #{userUnit},
+        userTel=#{userTel},
+        userEmai=#{userEmai},
+        userType=#{userType},
+        userTypeName=#{userTypeName},
+        selectKey=#{selectKey},
+        remark=#{remark},
+        time=#{time}
+        where
+        id = #{id}
+    </update>
+    <delete id="deleteUser">
+        delete from user where id = #{targetID}
+    </delete>
+    <select id="findUserNumber" resultType="java.lang.Integer">
+        select count(*) from user
+        where selectKey like #{remark}
+    </select>
+    <select id="findUser" resultType="com.example.demo.entity.User">
+        select * from user
+        where id = #{targetID}
+    </select>
+
 </mapper>

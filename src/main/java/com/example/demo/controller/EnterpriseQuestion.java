@@ -59,10 +59,31 @@ public class EnterpriseQuestion {
         return this.enterpriseQuestionService.findQuestionNumber(unit);
     }
 
+    //查询条数--企业专用
+    @RequestMapping(value = "/EnterpriseQuestion/findQuestionNumberToA",method = RequestMethod.POST)
+    @ResponseBody
+    public int findQuestionNumberToA(@RequestBody ReceiveEntity unit){
+        return this.enterpriseQuestionService.findQuestionNumberToA(unit);
+    }
+
     //根据关键字查询
     @RequestMapping(value = "/EnterpriseQuestion/findQuestionByKey",method = RequestMethod.POST)
     @ResponseBody
     public List findQuestionByKey(@RequestBody ReceiveEntity body){
         return this.enterpriseQuestionService.findQuestionByKey(body);
+    }
+
+    //根据页数来查询
+    @RequestMapping(value = "/EnterpriseQuestion/findAQ",method = RequestMethod.POST)
+    @ResponseBody
+    public List findAQ(@RequestBody ReceiveEntity receiveEntity){
+        return this.enterpriseQuestionService.findAQ(receiveEntity);
+    }
+
+    //根据页数来查询
+    @RequestMapping(value = "/EnterpriseQuestion/findEQ",method = RequestMethod.POST)
+    @ResponseBody
+    public List findEQ(@RequestBody ReceiveEntity receiveEntity){
+        return this.enterpriseQuestionService.findEQ(receiveEntity);
     }
 }

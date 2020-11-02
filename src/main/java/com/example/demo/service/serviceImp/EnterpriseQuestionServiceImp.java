@@ -31,18 +31,24 @@ public class EnterpriseQuestionServiceImp implements EnterpriseQuestionService {
         this.enterpriseQuestionDao.deleteQuestion(id);
     }
     public void addQuestion(Problem problem){
-        problem.setUnit(this.getUnitByName(problem.getUnitName()));
+        if(problem.getUnit()!="" || problem.getUnit()!=null){
+        }else {
+            problem.setUnit(this.getUnitByName(problem.getUnitName()));
+        }
         problem.setUnitName(this.getUnitNameById(problem.getUnit()));
         problem.setTime(new Date());
-//        problem.setSelectKey(this.getALLkey(problem));
+        problem.setSelectKey(this.getALLkey(problem));
         this.enterpriseQuestionDao.addQuestion(problem);
     }
 
     public void updateQuestion(Problem problem){
-        problem.setUnit(this.getUnitByName(problem.getUnitName()));
+        if(problem.getUnit()!="" || problem.getUnit()!=null){
+        }else {
+            problem.setUnit(this.getUnitByName(problem.getUnitName()));
+        }
         problem.setUnitName(this.getUnitNameById(problem.getUnit()));
         problem.setTime(new Date());
-//        problem.setSelectKey(this.getALLkey(problem));
+        problem.setSelectKey(this.getALLkey(problem));
         this.enterpriseQuestionDao.updateQuestion(problem);
     }
 
@@ -92,4 +98,27 @@ public class EnterpriseQuestionServiceImp implements EnterpriseQuestionService {
         key += problem.getType();
         return key;
     }
+    public int findQuestionNumberToA(ReceiveEntity unit){
+        unit.remark = "%"+unit.remark+"%";
+        if(unit.getType().equals("公共"))
+            return this.enterpriseQuestionDao.findAN(unit);
+        else{
+            return this.enterpriseQuestionDao.findEN(unit);
+        }
+    }
+
+    public List findAQ(ReceiveEntity receiveEntity){
+        receiveEntity.setUserUnit(this.getUnitByName(receiveEntity.getUserName()));
+        receiveEntity.page = (receiveEntity.page-1)*10;
+        receiveEntity.remark = "%"+receiveEntity.remark+"%";
+        return this.enterpriseQuestionDao.findAQ(receiveEntity);
+    }
+
+    public List findEQ(ReceiveEntity receiveEntity){
+        receiveEntity.setUserUnit(this.getUnitByName(receiveEntity.getUserName()));
+        receiveEntity.page = (receiveEntity.page-1)*10;
+        receiveEntity.remark = "%"+receiveEntity.remark+"%";
+        return this.enterpriseQuestionDao.findEQ(receiveEntity);
+    }
+
 }

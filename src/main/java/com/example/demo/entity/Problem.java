@@ -29,6 +29,8 @@ public class Problem {
 
     private String type;
 
+    private String adm;
+
     public String getName() {
         return name;
     }
@@ -156,5 +158,13 @@ public class Problem {
 
     public void setContentD(String contentD) {
         this.contentD = contentD;
+    }
+
+    public String getAdm() {
+        return adm;
+    }
+
+    public void setAdm(String adm) {
+        adm = adm;
     }
 }
