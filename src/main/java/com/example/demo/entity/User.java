@@ -15,6 +15,8 @@ public class User {
     private String remark;
     private Date time;
     private Integer userUnit;
+    private Integer userAccountId;
+    private String grade;
 
     public Integer getId() {
         return id;
@@ -110,5 +112,21 @@ public class User {
 
     public void setUserUnit(Integer userUnit) {
         this.userUnit = userUnit;
+    }
+
+    public Integer getUserAccountId() {
+        return userAccountId;
+    }
+
+    public void setUserAccountId(Integer userAccountId) {
+        this.userAccountId = userAccountId;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
     }
 }
