@@ -45,7 +45,7 @@
 
     <select id="findExamUser" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.User">
         select * from user
-        where userUnit = #{userUnit} and userType = 4
+        where userUnit = #{userUnit} and userType = 3
     </select>
 
     <insert id="addExaminee" parameterType="com.example.demo.entity.UserAndExam">
