@@ -1,9 +1,7 @@
 package com.example.demo.dao;
 
 
-import com.example.demo.entity.User;
-import com.example.demo.entity.Examination;
-import com.example.demo.entity.Problem;
+import com.example.demo.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -23,4 +21,8 @@ public interface IndividualTestDao {
     public Problem findExam(Integer id);
 
     public void setUserGrade(User user);
+
+    public Talent findTalent(Integer targetID);
+
+    public void updateTalent(Talent talent);
 }

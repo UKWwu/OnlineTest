@@ -31,4 +31,24 @@
         where
         id =#{targetID}
     </select>
+
+    <select id="findTalent" parameterType="java.lang.Integer" resultType="com.example.demo.entity.Talent">
+        select
+        name,sex,age,cardId,education,school
+        from talent_pool
+        where
+        id =#{targetID}
+    </select>
+
+    <update id="updateTalent">
+        UPDATE talent_pool set
+        name = #{name},
+        sex = #{sex},
+        age = #{age},
+        cardId = #{cardId},
+        education = #{education},
+        school = #{school}
+        where
+        id = #{id}
+    </update>
 </mapper>

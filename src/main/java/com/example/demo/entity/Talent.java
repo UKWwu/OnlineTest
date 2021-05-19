@@ -16,6 +16,9 @@ public class Talent {
     private String userName;
     private Integer testId;
     private String testName;
+    private String cardId;
+    private Integer age;
+
 
     public Integer getId() {
         return id;
@@ -119,5 +122,21 @@ public class Talent {
 
     public void setTestName(String testName) {
         this.testName = testName;
+    }
+
+    public String getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(String cardId) {
+        this.cardId = cardId;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 }

@@ -1,9 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Examination;
-import com.example.demo.entity.User;
-import com.example.demo.entity.Problem;
-import com.example.demo.entity.ReceiveEntity;
+import com.example.demo.entity.*;
 
 import java.util.List;
 
@@ -12,5 +9,11 @@ public interface IndividualTestService {
 
     public void setUserGrade(User user);
 
-    public Examination findTime(ReceiveEntity receiveEntity);
+    public Examination findTestTime(ReceiveEntity receiveEntity);
+
+    public Talent findTalent(ReceiveEntity receiveEntity);
+
+    public void updateTalent(Talent talent);
+
+    public void saveImg(String imgBase);
 }
