@@ -42,8 +42,35 @@ public class IndividualTestServiceImp implements IndividualTestService {
         return list;
     }
 
-    public void setUserGrade(User user){
+    public void setUserGrade(TestAnswerList testAnswerList){
+//        this.individualTestDao.setUserGrade(testAnswer);
+        String personId = testAnswerList.getPersonId();
+        String testId = testAnswerList.getTestId();
+        Integer grade = 0;
+        for(int i=0;i<testAnswerList.getTestAnswers().length;i++){
+            TestAnswer testAnswer = new TestAnswer();
+            testAnswer.setPersonId(personId);
+            testAnswer.setTestId(testId);
+            testAnswer.setAnswer(testAnswerList.getTestAnswers()[i].getAnswer());
+            testAnswer.setTrueAnswer(testAnswerList.getTestAnswers()[i].getTrueAnswer());
+            testAnswer.setProblemId(testAnswerList.getTestAnswers()[i].getId());
+            this.individualTestDao.saveUserAnswer(testAnswer);
+            if(testAnswer.getAnswer().equals(testAnswer.getTrueAnswer())){
+                grade += testAnswerList.getTestAnswers()[i].getScore();
+            }
+        }
+        User user = new User();
+        user.setUserAccountId(Integer.valueOf(personId));
+        user.setGrade(grade.toString());
         this.individualTestDao.setUserGrade(user);
+
+        //将用户账号设置为过期
+        this.setUserTested(personId);
+    }
+
+    //用户已经考试过
+    private void setUserTested(String personId) {
+        this.individualTestDao.setUserTested(personId);
     }
 
     public Examination findTestTime(ReceiveEntity receiveEntity){

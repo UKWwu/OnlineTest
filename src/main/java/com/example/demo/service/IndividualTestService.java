@@ -7,7 +7,7 @@ import java.util.List;
 public interface IndividualTestService {
     public List<Problem> findQuestionByExam(ReceiveEntity receiveEntity);
 
-    public void setUserGrade(User user);
+    public void setUserGrade(TestAnswerList testAnswerList);
 
     public Examination findTestTime(ReceiveEntity receiveEntity);
 

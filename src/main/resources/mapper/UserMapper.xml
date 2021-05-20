@@ -48,4 +48,21 @@
         where id = #{targetID}
     </select>
 
+    <select id="getTestId" resultType="java.lang.Integer">
+        select
+        testId
+        from
+        talent_pool
+        where
+        userAccountId = #{id}
+    </select>
+
+    <select id="getExamination" resultType="com.example.demo.entity.Examination">
+        select
+        *
+        from
+        examination
+        where
+        id = #{id}
+    </select>
 </mapper>

@@ -3,7 +3,6 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.*;
 import com.example.demo.entity.Examination;
-import com.example.demo.entity.User;
 import com.example.demo.service.IndividualTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,8 +26,8 @@ public class IndividualTest {
     }
 
     @RequestMapping("/setUserGrade")
-    public void setUserGrade(@RequestBody User user){
-        this.individualTestService.setUserGrade(user);
+    public void setUserGrade(@RequestBody TestAnswerList testAnswerList){
+        this.individualTestService.setUserGrade(testAnswerList);
     }
 
 

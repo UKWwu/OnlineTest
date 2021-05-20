@@ -3,6 +3,7 @@ package com.example.demo.service.serviceImp;
 import com.example.demo.dao.EnterpriseDao;
 import com.example.demo.dao.LoginDao;
 import com.example.demo.dao.UserDao;
+import com.example.demo.entity.Examination;
 import com.example.demo.entity.ReceiveEntity;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -24,8 +27,33 @@ public class UserServiceImp implements UserService {
     private EnterpriseDao enterpriseDao;
 
     public User Login(User user){
-        User user1 = this.userDao.Login(user);
-        return user1;
+        User returnUser = this.userDao.Login(user);
+        //获取考试场次id
+        Integer testId = this.userDao.getTestId(returnUser.getId());
+        //查看是否过期
+        Examination examination = this.userDao.getExamination(testId);
+        Date date = new Date();
+        if(!examination.getStatus().equals("正在进行")){
+            returnUser.setUserType("4");
+        }
+        //compareTo()方法的返回值，date小于endTime返回-1，date1大于date2返回1，相等返回0
+        if(examination.getEndTime() != null){
+            if((1 == date.compareTo(examination.getEndTime())) || (0 == date.compareTo(examination.getEndTime()))){
+                returnUser.setUserType("4");
+            }
+        }else{
+            returnUser.setUserType("4");
+        }
+
+        if(examination.getBeginTime() != null){
+            if(-1 == date.compareTo(examination.getBeginTime())){
+                returnUser.setUserType("4");
+            }
+        }else{
+            returnUser.setUserType("4");
+        }
+
+        return returnUser;
     }
     public List finUserList(ReceiveEntity receiveEntity){
         receiveEntity.setUserUnit(this.getUnitByName(receiveEntity.getUserName()));

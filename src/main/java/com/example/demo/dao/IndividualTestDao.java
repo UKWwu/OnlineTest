@@ -25,4 +25,8 @@ public interface IndividualTestDao {
     public Talent findTalent(Integer targetID);
 
     public void updateTalent(Talent talent);
+
+    public void saveUserAnswer(TestAnswer testAnswer);
+
+    public void setUserTested(String personId);
 }

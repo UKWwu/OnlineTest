@@ -25,6 +25,8 @@ public class Problem {
     //最近修改时间
     private Date time;
 
+    private Integer score;
+
     private String selectKey;
 
     private String type;
@@ -166,5 +168,13 @@ public class Problem {
 
     public void setAdm(String adm) {
         adm = adm;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
     }
 }

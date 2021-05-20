@@ -51,4 +51,19 @@
         where
         id = #{id}
     </update>
+
+    <insert id="saveUserAnswer">
+        insert into test_answer
+        (personId,testId,answer,remark,problemId,trueAnswer)
+        VALUES
+        (#{personId},#{testId},#{answer},#{remark},#{problemId},#{trueAnswer})
+    </insert>
+
+    <update id="setUserTested">
+         UPDATE user set
+        userType = "4"
+        where
+        id = #{id}
+    </update>
+
 </mapper>
