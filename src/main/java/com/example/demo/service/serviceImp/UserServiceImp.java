@@ -28,6 +28,9 @@ public class UserServiceImp implements UserService {
 
     public User Login(User user){
         User returnUser = this.userDao.Login(user);
+        if((returnUser.getUserType()).equals("1") || (returnUser.getUserType().equals("2"))){
+            return returnUser;
+        }
         //获取考试场次id
         Integer testId = this.userDao.getTestId(returnUser.getId());
         //查看是否过期

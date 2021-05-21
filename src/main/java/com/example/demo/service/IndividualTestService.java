@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -15,5 +16,5 @@ public interface IndividualTestService {
 
     public void updateTalent(Talent talent);
 
-    public void saveImg(String imgBase);
+    public void saveImg(MultipartFile file);
 }

@@ -5,10 +5,8 @@ import com.example.demo.entity.*;
 import com.example.demo.entity.Examination;
 import com.example.demo.service.IndividualTestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -49,9 +47,16 @@ public class IndividualTest {
          this.individualTestService.updateTalent(talent);
     }
 
+//    //保存图片（在线笔试系统确认阶段使用）
+//    @RequestMapping("/saveImg")
+//    public void saveImg(@RequestBody String imgBase){
+//        this.individualTestService.saveImg(imgBase);
+//    }
+
+
     //保存图片（在线笔试系统确认阶段使用）
     @RequestMapping("/saveImg")
-    public void saveImg(@RequestBody String imgBase){
-        this.individualTestService.saveImg(imgBase);
+    public void test(@RequestParam("file") MultipartFile file){
+        this.individualTestService.saveImg(file);
     }
 }

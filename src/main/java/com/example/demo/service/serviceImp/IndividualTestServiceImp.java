@@ -6,6 +6,7 @@ import com.example.demo.service.IndividualTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -23,7 +24,7 @@ public class IndividualTestServiceImp implements IndividualTestService {
     @Autowired
     private IndividualTestDao individualTestDao;
 
-    public List<Problem> findQuestionByExam(ReceiveEntity receiveEntity){
+    public List<Problem> findQuestionByExam(ReceiveEntity receiveEntity) {
         List list = new ArrayList();
         //查询目标考试ID
         Integer examinationId = this.individualTestDao.findExamByUserId(receiveEntity.getTargetID());
@@ -42,12 +43,12 @@ public class IndividualTestServiceImp implements IndividualTestService {
         return list;
     }
 
-    public void setUserGrade(TestAnswerList testAnswerList){
+    public void setUserGrade(TestAnswerList testAnswerList) {
 //        this.individualTestDao.setUserGrade(testAnswer);
         String personId = testAnswerList.getPersonId();
         String testId = testAnswerList.getTestId();
         Integer grade = 0;
-        for(int i=0;i<testAnswerList.getTestAnswers().length;i++){
+        for (int i = 0; i < testAnswerList.getTestAnswers().length; i++) {
             TestAnswer testAnswer = new TestAnswer();
             testAnswer.setPersonId(personId);
             testAnswer.setTestId(testId);
@@ -55,7 +56,7 @@ public class IndividualTestServiceImp implements IndividualTestService {
             testAnswer.setTrueAnswer(testAnswerList.getTestAnswers()[i].getTrueAnswer());
             testAnswer.setProblemId(testAnswerList.getTestAnswers()[i].getId());
             this.individualTestDao.saveUserAnswer(testAnswer);
-            if(testAnswer.getAnswer().equals(testAnswer.getTrueAnswer())){
+            if (testAnswer.getAnswer().equals(testAnswer.getTrueAnswer())) {
                 grade += testAnswerList.getTestAnswers()[i].getScore();
             }
         }
@@ -73,30 +74,41 @@ public class IndividualTestServiceImp implements IndividualTestService {
         this.individualTestDao.setUserTested(personId);
     }
 
-    public Examination findTestTime(ReceiveEntity receiveEntity){
+    public Examination findTestTime(ReceiveEntity receiveEntity) {
         //查询目标考试ID
         Integer examinationId = this.individualTestDao.findExamByUserId(receiveEntity.getTargetID());
         Examination examination = this.individualTestDao.findExamTimeByUserId(examinationId);
         return examination;
     }
 
-    public Talent findTalent(ReceiveEntity receiveEntity){
+    public Talent findTalent(ReceiveEntity receiveEntity) {
         return this.individualTestDao.findTalent(receiveEntity.targetID);
     }
 
-    public void updateTalent(Talent talent){
-         this.individualTestDao.updateTalent(talent);
+    public void updateTalent(Talent talent) {
+        this.individualTestDao.updateTalent(talent);
     }
 
-    public void saveImg(String imgBase){
-        //先解码
-        String newImg = "";
+    public void saveImg(MultipartFile file) {
+        System.out.println(file);
+        String fileName = file.getOriginalFilename();
+        if (fileName.indexOf("\\") != -1) {
+            fileName = fileName.substring(fileName.lastIndexOf("\\"));
+        }
+        String filePath = "G:/homework/localImg/";
+        File targetFile = new File(filePath);
+        if (!targetFile.exists()) {
+            targetFile.mkdirs();
+        }
+        FileOutputStream out = null;
         try {
-            newImg= URLDecoder.decode(imgBase, "UTF-8");//解码
-        } catch (UnsupportedEncodingException e) {
+            out = new FileOutputStream(filePath + fileName);
+            out.write(file.getBytes());
+            out.flush();
+            out.close();
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        GenerateImage(newImg,"G:\\homework\\localImg\\ces.png");
     }
 
     public String GetImageStr(String imgFilePath) {// 将图片文件转化为字节数组字符串，并对其进行Base64编码处理
