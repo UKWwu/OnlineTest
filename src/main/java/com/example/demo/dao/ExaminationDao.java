@@ -17,9 +17,13 @@ public interface ExaminationDao {
 
     public List<Examination> findExamination(ReceiveEntity receiveEntity);
 
+    public List<Examination> findExaminationWithKey(ReceiveEntity receiveEntity);
+
     public void finishExam(ReceiveEntity receiveEntity);
 
     public Integer findExaminationNumber(ReceiveEntity receiveEntity);
+
+    public Integer findExaminationNumberWithKey(ReceiveEntity receiveEntity);
 
     public void addExamination(Examination examination);
 

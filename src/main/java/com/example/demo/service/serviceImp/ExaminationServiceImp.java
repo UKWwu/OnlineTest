@@ -52,9 +52,15 @@ public class ExaminationServiceImp implements ExaminationService {
 
 
     public List findExamination(ReceiveEntity receiveEntity){
+        //查询关键字为status
         receiveEntity.setUserUnit(this.getUnitByName(receiveEntity.getUserName()));
         receiveEntity.page = (receiveEntity.page-1)*10;
-        return this.examinationDao.findExamination(receiveEntity);
+        if(receiveEntity.getKey()!=null){
+            return this.examinationDao.findExaminationWithKey(receiveEntity);
+        }else{
+            return this.examinationDao.findExamination(receiveEntity);
+        }
+
     }
 
     //获取当前角色的单位
@@ -68,7 +74,11 @@ public class ExaminationServiceImp implements ExaminationService {
 
     public Integer findExaminationNumber(ReceiveEntity receiveEntity){
         receiveEntity.setUserUnit(this.getUnitByName(receiveEntity.getUserName()));
-        return this.examinationDao.findExaminationNumber(receiveEntity);
+        if(receiveEntity.getKey()!=null){
+            return this.examinationDao.findExaminationNumberWithKey(receiveEntity);
+        }else{
+            return this.examinationDao.findExaminationNumber(receiveEntity);
+        }
     }
 
     public Examination addExamination(Examination examination){

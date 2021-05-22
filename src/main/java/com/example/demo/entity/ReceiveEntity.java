@@ -28,6 +28,9 @@ public class ReceiveEntity {
 
     public Integer min;
 
+    //查询关键字
+    public String key;
+
     public Object getObject() {
         return object;
     }
@@ -114,5 +117,13 @@ public class ReceiveEntity {
 
     public void setMin(Integer min) {
         this.min = min;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

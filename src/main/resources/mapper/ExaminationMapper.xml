@@ -23,9 +23,20 @@
         ORDER BY beginTime desc LIMIT #{page},#{number}
     </select>
 
+    <select id="findExaminationWithKey" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.Examination">
+        select * from examination
+        where unit = #{userUnit} and `status` = #{key}
+        ORDER BY beginTime desc LIMIT #{page},#{number}
+    </select>
+
     <select id="findExaminationNumber" parameterType="com.example.demo.entity.ReceiveEntity" resultType="java.lang.Integer">
         select count(*) from examination
         where unit = #{userUnit}
+    </select>
+
+    <select id="findExaminationNumberWithKey" parameterType="com.example.demo.entity.ReceiveEntity" resultType="java.lang.Integer">
+        select count(*) from examination
+        where unit = #{userUnit} and `status` = #{key}
     </select>
 
     <update id="finishExam" parameterType="com.example.demo.entity.ReceiveEntity">

@@ -10,9 +10,9 @@
 
     <insert id="addTalent">
         insert into talent_pool
-        (name,unit,sex,education,school,grade,remark,selectKey,time)
+        (name,unit,sex,education,school,grade,remark,selectKey,time,cardId,age,telphone,email)
         VALUES
-        (#{name},#{unit},#{sex},#{education},#{school},#{grade},#{remark},#{selectKey},#{time})
+        (#{name},#{unit},#{sex},#{education},#{school},#{grade},#{remark},#{selectKey},#{time},#{cardId},#{age},#{telphone},#{email})
     </insert>
 
     <update id="updateTalent">
@@ -26,7 +26,11 @@
         school=#{school},
         grade = #{grade},
         selectKey = #{selectKey},
-        time = #{time}
+        time = #{time},
+        cardId = #{cardId},
+        age = #{age},
+        telphone = #{telphone},
+        email = #{email}
         where
         id = #{id}
     </update>
