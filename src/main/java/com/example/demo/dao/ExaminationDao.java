@@ -30,4 +30,12 @@ public interface ExaminationDao {
     public List<User> findExamUser(ReceiveEntity receiveEntity);
 
     public void addExaminee(UserAndExam userAndExam);
+
+    public List<Examination> findEndTest(String unit);
+
+    public void deleteExam(ReceiveEntity receiveEntity);
+
+    public List<Talent> findAllTalent(ReceiveEntity receiveEntity);
+
+    public void addExamProblem(TestProblem testProblem);
 }

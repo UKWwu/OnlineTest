@@ -5,8 +5,8 @@
     <select id="findFiveByTestId" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.Talent">
         select * from talent_pool
         where
-        testId = #{targetID}
-        ORDER BY cast(grade as UNSIGNED INTEGER) desc LIMIT 0,5
+        unit = #{userUnit}
+        ORDER BY cast(grade as UNSIGNED INTEGER) desc LIMIT 0,15
     </select>
 
     <select id="findRatioById" parameterType="com.example.demo.entity.ReceiveEntity" resultType="java.lang.Integer">
@@ -66,5 +66,29 @@
         (#{userId},#{examinationId},#{beginTime},#{continueTime},#{endTime},#{userName})
     </insert>
 
+
+    <select id="findEndTest"  resultType="com.example.demo.entity.Examination">
+        select * from examination
+        where unit = #{unit} and status = "已结束"
+        ORDER BY endTime desc
+    </select>
+
+    <delete id="deleteExam">
+        delete from examination
+        where id = #{targetID}
+    </delete>
+
+    <select id="findAllTalent" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.Talent">
+        select * from talent_pool
+        where unit = #{userUnit}
+        ORDER BY id desc
+    </select>
+
+    <insert id="addExamProblem" parameterType="com.example.demo.entity.TestProblem">
+        insert into test_question
+        (testId,problemId)
+        value
+        (#{testId},#{problemId})
+    </insert>
 
 </mapper>

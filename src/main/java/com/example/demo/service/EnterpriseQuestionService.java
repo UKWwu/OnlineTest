@@ -18,6 +18,8 @@ public interface EnterpriseQuestionService {
 
     public int findQuestionNumber(ReceiveEntity unit);
 
+    public int findQuestionNumberByKey(ReceiveEntity unit);
+
     public List findQuestionByKey(ReceiveEntity body);
 
     public int findQuestionNumberToA(ReceiveEntity unit);

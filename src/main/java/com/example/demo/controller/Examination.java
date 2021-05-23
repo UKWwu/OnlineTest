@@ -19,10 +19,16 @@ public class Examination {
     @Autowired
     private ExaminationService examinationService;
 
-    //寻找某次笔试的前五名
-    @RequestMapping("/findFiveByTestId")
-    public List findFiveByTestId(@RequestBody ReceiveEntity receiveEntity){
-        return this.examinationService.findFiveByTestId(receiveEntity);
+    //寻找成绩最好的学生
+    @RequestMapping("/findBestStudent")
+    public List findBestStudent(@RequestBody ReceiveEntity receiveEntity){
+        return this.examinationService.findBestStudent(receiveEntity);
+    }
+
+    //寻找最近的一次考试
+    @RequestMapping("/findEndTest")
+    public com.example.demo.entity.Examination findEndTest(@RequestBody ReceiveEntity receiveEntity){
+        return this.examinationService.findEndTest(receiveEntity);
     }
 
     //查找某次笔试的成绩比例
@@ -43,6 +49,12 @@ public class Examination {
         this.examinationService.finishExam(receiveEntity);
     }
 
+    //删除笔试
+    @RequestMapping("/deleteExam")
+    public void deleteExam(@RequestBody ReceiveEntity receiveEntity){
+        this.examinationService.deleteExam(receiveEntity);
+    }
+
     //查询条数
     @RequestMapping("/findExaminationNumber")
     public Integer findExaminationNumber(@RequestBody ReceiveEntity receiveEntity){
@@ -61,9 +73,21 @@ public class Examination {
         return this.examinationService.findExamUser(receiveEntity);
     }
 
-    //新增
+    //新建考试时查询人才库
+    @RequestMapping("/findExamTalent")
+    public List findExamTalent(@RequestBody ReceiveEntity receiveEntity){
+        return this.examinationService.findExamTalent(receiveEntity);
+    }
+
+    //新增考试人员
     @RequestMapping("/addExaminee")
     public void addExaminee(@RequestBody ReceiveEntity receiveEntity){
          this.examinationService.addExaminee(receiveEntity);
+    }
+
+    //新增考试问题
+    @RequestMapping("/addExamProblem")
+    public void addExamProblem(@RequestBody ReceiveEntity receiveEntity){
+         this.examinationService.addExamProblem(receiveEntity);
     }
 }

@@ -59,6 +59,13 @@ public class EnterpriseQuestion {
         return this.enterpriseQuestionService.findQuestionNumber(unit);
     }
 
+    //根据关键字查询条数
+    @RequestMapping(value = "/EnterpriseQuestion/findQuestionNumberByKey",method = RequestMethod.POST)
+    @ResponseBody
+    public int findQuestionNumberByKey(@RequestBody ReceiveEntity unit){
+        return this.enterpriseQuestionService.findQuestionNumberByKey(unit);
+    }
+
     //查询条数--企业专用
     @RequestMapping(value = "/EnterpriseQuestion/findQuestionNumberToA",method = RequestMethod.POST)
     @ResponseBody

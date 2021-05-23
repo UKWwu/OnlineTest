@@ -51,18 +51,33 @@
         <!--select * from problem where selectKey like #{keys}-->
     <!--</select>-->
 
-    <select id="findQuestionByKey" parameterType="com.example.demo.entity.ReceiveEntity"  resultType="com.example.demo.entity.Problem">
-        select * from problem where name like #{remark}
+    <select id="findAllQuestionByKey" parameterType="com.example.demo.entity.ReceiveEntity"  resultType="com.example.demo.entity.Problem">
+        select * from problem where name like #{remark} and  unit = #{userUnit}
         union
-        select * from problem where title like #{remark}
+        select * from problem where title like #{remark} and  unit = #{userUnit}
         union
-        select * from problem where content like  #{remark}
+        select * from problem where content like  #{remark} and  unit = #{userUnit}
          union
-        select * from problem where unitName like #{remark}
+        select * from problem where unitName like #{remark} and  unit = #{userUnit}
         union
-        select * from problem where problemType like #{remark}
+        select * from problem where problemType like #{remark} and  unit = #{userUnit}
         union
-        select * from problem where type like #{remark}
+        select * from problem where type like #{remark} and  unit = #{userUnit}
+        ORDER BY time
+    </select>
+
+    <select id="findQuestionByKey" parameterType="com.example.demo.entity.ReceiveEntity"  resultType="com.example.demo.entity.Problem">
+        select * from problem where name like #{remark} and  unit = #{userUnit}
+        union
+        select * from problem where title like #{remark} and  unit = #{userUnit}
+        union
+        select * from problem where content like  #{remark} and  unit = #{userUnit}
+         union
+        select * from problem where unitName like #{remark} and  unit = #{userUnit}
+        union
+        select * from problem where problemType like #{remark} and  unit = #{userUnit}
+        union
+        select * from problem where type like #{remark} and  unit = #{userUnit}
         ORDER BY time LIMIT #{page},#{number}
     </select>
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ExaminationService {
 
-    public List findFiveByTestId(ReceiveEntity receiveEntity);
+    public List findBestStudent(ReceiveEntity receiveEntity);
 
     public List findRatioById(ReceiveEntity receiveEntity);
 
@@ -22,4 +22,12 @@ public interface ExaminationService {
     public List findExamUser(ReceiveEntity receiveEntity);
 
     public void addExaminee(ReceiveEntity receiveEntity);
+
+    public com.example.demo.entity.Examination findEndTest(ReceiveEntity receiveEntity);
+
+    public void deleteExam(ReceiveEntity receiveEntity);
+
+    public List findExamTalent(ReceiveEntity receiveEntity);
+
+    public void addExamProblem(ReceiveEntity receiveEntity);
 }

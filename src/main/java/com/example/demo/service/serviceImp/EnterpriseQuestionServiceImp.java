@@ -31,6 +31,10 @@ public class EnterpriseQuestionServiceImp implements EnterpriseQuestionService {
         this.enterpriseQuestionDao.deleteQuestion(id);
     }
     public void addQuestion(Problem problem){
+        System.out.println(problem.getUnit());
+        if(problem.getUnit() == null){
+            problem.setUnit(this.getUnitByName(problem.getUnitName()));
+        }
         if(problem.getUnit()!="" || problem.getUnit()!=null){
         }else {
             problem.setUnit(this.getUnitByName(problem.getUnitName()));
@@ -42,6 +46,9 @@ public class EnterpriseQuestionServiceImp implements EnterpriseQuestionService {
     }
 
     public void updateQuestion(Problem problem){
+        if(problem.getUnit() == null){
+            problem.setUnit(this.getUnitByName(problem.getUnitName()));
+        }
         if(problem.getUnit()!="" || problem.getUnit()!=null){
         }else {
             problem.setUnit(this.getUnitByName(problem.getUnitName()));
@@ -73,11 +80,18 @@ public class EnterpriseQuestionServiceImp implements EnterpriseQuestionService {
     }
 
 
-
     public int findQuestionNumber(ReceiveEntity unit){
         String unitName = unit.getUserName();
         String id = this.getUnitByName(unitName);
         return this.enterpriseQuestionDao.findQuestionNumber(id);
+    }
+
+    public int findQuestionNumberByKey(ReceiveEntity unit){
+        //根据remark进行查询
+        String[] keys = unit.remark.split("\\+");
+        unit.remark = "%"+unit.remark+"%";
+        unit.setUserUnit(this.getUnitByName(unit.getUserName()));
+        return this.enterpriseQuestionDao.findAllQuestionByKey(unit).size();
     }
 
     public List findQuestionByKey(ReceiveEntity body){
@@ -85,6 +99,7 @@ public class EnterpriseQuestionServiceImp implements EnterpriseQuestionService {
         String[] keys = body.remark.split("\\+");
         body.remark = "%"+body.remark+"%";
         body.page = (body.page-1)*10;
+        body.setUserUnit(this.getUnitByName(body.getUserName()));
         return this.enterpriseQuestionDao.findQuestionByKey(body);
     }
 

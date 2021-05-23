@@ -1,11 +1,8 @@
 package com.example.demo.service.serviceImp;
 
-import com.example.demo.entity.UserAndExam;
-import com.example.demo.entity.Examination;
+import com.example.demo.entity.*;
 import com.example.demo.dao.EnterpriseDao;
 import com.example.demo.dao.ExaminationDao;
-import com.example.demo.entity.ReceiveEntity;
-import com.example.demo.entity.ResultEntity;
 import com.example.demo.service.ExaminationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +22,8 @@ public class ExaminationServiceImp implements ExaminationService {
     @Autowired
     private EnterpriseDao enterpriseDao;
 
-    public List findFiveByTestId(ReceiveEntity receiveEntity) {
+    public List findBestStudent(ReceiveEntity receiveEntity) {
+        receiveEntity.setUserUnit(this.getUnitByName(receiveEntity.getUserName()));
         List list = this.examinationDao.findFiveByTestId(receiveEntity);
         return list;
     }
@@ -98,6 +96,35 @@ public class ExaminationServiceImp implements ExaminationService {
             userAndExam.setUserId((Integer) temp.get(i));
             userAndExam.setExaminationId(receiveEntity.getTargetID());
             this.examinationDao.addExaminee(userAndExam);
+        }
+    }
+
+    //查找最近的一次考试
+    public com.example.demo.entity.Examination findEndTest(ReceiveEntity receiveEntity){
+        String unit =  this.getUnitByName(receiveEntity.getUserName());
+        List lists = this.examinationDao.findEndTest(unit);
+        return (Examination) lists.get(0);
+    }
+
+    //删除笔试
+    public void deleteExam(ReceiveEntity receiveEntity){
+        this.examinationDao.deleteExam(receiveEntity);
+    }
+
+    //新建时查询人才库
+    public List findExamTalent(ReceiveEntity receiveEntity){
+        receiveEntity.setUserUnit(this.getUnitByName(receiveEntity.getUserName()));
+        return this.examinationDao.findAllTalent(receiveEntity);
+    }
+
+    //新增考试人员
+    public void addExamProblem(ReceiveEntity receiveEntity){
+        List temp = (List) receiveEntity.getObject();
+        for (int i = 0; i < temp.size(); i++) {
+            TestProblem testProblem = new TestProblem();
+            testProblem.setProblemId(String.valueOf(temp.get(i)));
+            testProblem.setTestId(String.valueOf(receiveEntity.targetID));
+            this.examinationDao.addExamProblem(testProblem);
         }
     }
 }

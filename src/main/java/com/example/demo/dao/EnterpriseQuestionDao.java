@@ -24,6 +24,8 @@ public interface EnterpriseQuestionDao {
 
     public int findQuestionNumber(String id);
 
+    public List<Problem> findAllQuestionByKey(ReceiveEntity keys);
+
     public List<Problem> findQuestionByKey(ReceiveEntity keys);
 
     public int findAN(ReceiveEntity receiveEntity);
