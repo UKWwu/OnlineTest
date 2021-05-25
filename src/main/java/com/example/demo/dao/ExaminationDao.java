@@ -38,4 +38,12 @@ public interface ExaminationDao {
     public List<Talent> findAllTalent(ReceiveEntity receiveEntity);
 
     public void addExamProblem(TestProblem testProblem);
+
+    public void updateExaminee(UserAndExam userAndExam);
+
+    public List<TestProblem> findProblemData(ReceiveEntity receiveEntity);
+
+    public List<UserAndExam> findUserData(ReceiveEntity receiveEntity);
+
+    public User findUserById(Integer userAccountId);
 }

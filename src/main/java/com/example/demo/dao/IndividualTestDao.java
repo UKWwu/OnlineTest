@@ -29,4 +29,13 @@ public interface IndividualTestDao {
     public void saveUserAnswer(TestAnswer testAnswer);
 
     public void setUserTested(String personId);
+
+    public void saveImg(String s);
+
+    public void savePicture(Picture picture);
+    
+
+    public Integer findTalentId(Integer targetID);
+
+    public List<UserAndExam> findUser(ReceiveEntity receiveEntity);
 }

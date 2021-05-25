@@ -77,19 +77,20 @@ public class IndividualTestServiceImp implements IndividualTestService {
     public Examination findTestTime(ReceiveEntity receiveEntity) {
         //查询目标考试ID
         Integer examinationId = this.individualTestDao.findExamByUserId(receiveEntity.getTargetID());
-        Examination examination = this.individualTestDao.findExamTimeByUserId(examinationId);
+            Examination examination = this.individualTestDao.findExamTimeByUserId(examinationId);
         return examination;
     }
 
     public Talent findTalent(ReceiveEntity receiveEntity) {
-        return this.individualTestDao.findTalent(receiveEntity.targetID);
+        Integer id = this.individualTestDao.findTalentId(receiveEntity.targetID);
+        return this.individualTestDao.findTalent(id);
     }
 
     public void updateTalent(Talent talent) {
         this.individualTestDao.updateTalent(talent);
     }
 
-    public void saveImg(MultipartFile file) {
+    public String saveImg(MultipartFile file) {
         System.out.println(file);
         String fileName = file.getOriginalFilename();
         if (fileName.indexOf("\\") != -1) {
@@ -109,6 +110,7 @@ public class IndividualTestServiceImp implements IndividualTestService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return filePath+fileName;
     }
 
     public String GetImageStr(String imgFilePath) {// 将图片文件转化为字节数组字符串，并对其进行Base64编码处理
@@ -149,6 +151,22 @@ public class IndividualTestServiceImp implements IndividualTestService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    //数据库保存图片
+    public void savePicture(Picture picture){
+       this.individualTestDao.savePicture(picture);
+    }
+
+    //查找参考人员信息
+    public List findTalentList(ReceiveEntity receiveEntity){
+        //查找参考人员有哪些
+        List<UserAndExam>  list= this.individualTestDao.findUser(receiveEntity);
+        List ans = new ArrayList();
+        for (int i = 0; i < list.size(); i++) {
+            ans.add(this.individualTestDao.findTalent(list.get(i).getUserId()));
+        }
+        return ans;
     }
 
 }

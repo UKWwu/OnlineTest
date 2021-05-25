@@ -81,13 +81,31 @@ public class Examination {
 
     //新增考试人员
     @RequestMapping("/addExaminee")
-    public void addExaminee(@RequestBody ReceiveEntity receiveEntity){
-         this.examinationService.addExaminee(receiveEntity);
+    public List addExaminee(@RequestBody ReceiveEntity receiveEntity){
+         return this.examinationService.addExaminee(receiveEntity);
     }
 
     //新增考试问题
     @RequestMapping("/addExamProblem")
     public void addExamProblem(@RequestBody ReceiveEntity receiveEntity){
          this.examinationService.addExamProblem(receiveEntity);
+    }
+
+    //查询该场考试的问题
+    @RequestMapping("/findProblemData")
+    public List findProblemData(@RequestBody ReceiveEntity receiveEntity){
+        return this.examinationService.findProblemData(receiveEntity);
+    }
+
+    //查询该场考试的人员
+    @RequestMapping("/findUserData")
+    public List findUserData(@RequestBody ReceiveEntity receiveEntity){
+        return this.examinationService.findUserData(receiveEntity);
+    }
+
+    //更新考试人员信息
+    @RequestMapping("/updateUserAndExam")
+    public void updateUserAndExam(@RequestBody com.example.demo.entity.UserAndExam userAndExam){
+         this.examinationService.updateUserAndExam(userAndExam);
     }
 }

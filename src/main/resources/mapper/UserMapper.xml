@@ -13,7 +13,7 @@
         where selectKey like #{remark}
         ORDER BY id LIMIT #{page},#{number}
     </select>
-    <insert id="addUser">
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="id" parameterType="com.example.demo.entity.User">
         insert into user
         (userAccount,userName,userUnit,password,userTel,userEmai,userType,userTypeName,selectKey,remark,time)
         value
@@ -64,5 +64,15 @@
         examination
         where
         id = #{id}
+    </select>
+
+    <select id="getUserNameById" resultType="com.example.demo.entity.Talent">
+        select * from talent_pool
+        where id = #{userId}
+    </select>
+
+    <select id="getTalentId" resultType="java.lang.Integer">
+        select examinationId from test_person
+        where userAccountId = #{id}
     </select>
 </mapper>

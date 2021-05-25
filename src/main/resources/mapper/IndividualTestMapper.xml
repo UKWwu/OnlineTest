@@ -5,7 +5,7 @@
     <select id="findExamByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         select examinationId from test_person
         where
-        userId =#{targetID}
+        userAccountId =#{targetID}
     </select>
 
     <select id="findExamsById" parameterType="java.lang.Integer" resultType="java.lang.Integer">
@@ -59,6 +59,20 @@
         (#{personId},#{testId},#{answer},#{remark},#{problemId},#{trueAnswer})
     </insert>
 
+    <insert id="saveImg">
+        insert into picture
+        (personId,testId,answer,remark,problemId,trueAnswer)
+        VALUES
+        (#{personId},#{testId},#{answer},#{remark},#{problemId},#{trueAnswer})
+    </insert>
+
+    <insert id="savePicture">
+        insert into picture
+        (talentId,testId,picture)
+        VALUES
+        (#{talentId},#{testId},#{picture})
+    </insert>
+
     <update id="setUserTested">
          UPDATE user set
         userType = "4"
@@ -66,4 +80,19 @@
         id = #{id}
     </update>
 
+    <select id="findUser" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.UserAndExam">
+        select
+        *
+        from test_person
+        where
+        examinationId =#{targetID}
+    </select>
+
+    <select id="findTalentId" resultType="java.lang.Integer">
+        select
+        userId
+        from test_person
+        where
+        userAccountId =#{targetID}
+    </select>
 </mapper>

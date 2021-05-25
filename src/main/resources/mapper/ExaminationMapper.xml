@@ -59,7 +59,7 @@
         where userUnit = #{userUnit} and userType = 3
     </select>
 
-    <insert id="addExaminee" parameterType="com.example.demo.entity.UserAndExam">
+    <insert id="addExaminee" parameterType="com.example.demo.entity.UserAndExam" useGeneratedKeys="true" keyProperty="id">
         insert into test_person
         (userId,examinationId,beginTime,continueTime,endTime,userName)
         value
@@ -91,4 +91,33 @@
         (#{testId},#{problemId})
     </insert>
 
+    <update id="updateExaminee" parameterType="com.example.demo.entity.UserAndExam">
+        update test_person
+        set
+        examinationId=#{examinationId},
+        beginTime=#{beginTime},
+        continueTime=#{continueTime},
+        endTime=#{endTime},
+        userName=#{userName},
+        userAccountId=#{userAccountId}
+        where
+        id = #{id}
+    </update>
+
+    <select id="findProblemData" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.TestProblem">
+        select * from test_question
+        where testId = #{targetID}
+        ORDER BY id desc
+    </select>
+
+    <select id="findUserData" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.UserAndExam">
+        select * from test_person
+        where examinationId = #{targetID}
+        ORDER BY id desc
+    </select>
+
+    <select id="findUserById" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.User">
+        select * from user
+        where id = #{userAccountId}
+    </select>
 </mapper>

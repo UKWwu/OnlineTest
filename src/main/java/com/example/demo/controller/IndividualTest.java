@@ -41,6 +41,12 @@ public class IndividualTest {
         return this.individualTestService.findTalent(receiveEntity);
     }
 
+    //该场笔试所有参考人员
+    @RequestMapping("/findTalentList")
+    public List findTalentList(@RequestBody ReceiveEntity receiveEntity){
+        return this.individualTestService.findTalentList(receiveEntity);
+    }
+
     //考生修改个人信息(在线笔试确认信息阶段使用)
     @RequestMapping("/updateTalent")
     public void updateTalent(@RequestBody Talent talent){
@@ -56,7 +62,13 @@ public class IndividualTest {
 
     //保存图片（在线笔试系统确认阶段使用）
     @RequestMapping("/saveImg")
-    public void test(@RequestParam("file") MultipartFile file){
-        this.individualTestService.saveImg(file);
+    public String saveImg(@RequestParam("file") MultipartFile file){
+        return this.individualTestService.saveImg(file);
+    }
+
+    //保存图片（在线笔试系统确认阶段使用）
+    @RequestMapping("/savePicture")
+    public void savePicture(@RequestBody Picture picture){
+         this.individualTestService.savePicture(picture);
     }
 }

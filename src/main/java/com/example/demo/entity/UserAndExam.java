@@ -4,11 +4,14 @@ import java.util.Date;
 
 public class UserAndExam {
     private Integer userId;
+    private Integer Id;
     private Integer examinationId;
     private Date beginTime;
     private Date endTime;
     private Date continueTime;
     private String userName;
+    private Integer util;
+    private Integer userAccountId;
 
     public Integer getUserId() {
         return userId;
@@ -56,5 +59,29 @@ public class UserAndExam {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public Integer getUtil() {
+        return util;
+    }
+
+    public void setUtil(Integer util) {
+        this.util = util;
+    }
+
+    public Integer getUserAccountId() {
+        return userAccountId;
+    }
+
+    public void setUserAccountId(Integer userAccountId) {
+        this.userAccountId = userAccountId;
+    }
+
+    public Integer getId() {
+        return Id;
+    }
+
+    public void setId(Integer id) {
+        Id = id;
     }
 }

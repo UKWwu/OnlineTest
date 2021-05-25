@@ -27,12 +27,15 @@ public class UserServiceImp implements UserService {
     private EnterpriseDao enterpriseDao;
 
     public User Login(User user){
-        User returnUser = this.userDao.Login(user);
+            User returnUser = this.userDao.Login(user);
+        if(returnUser == null){
+            return returnUser;
+        }
         if((returnUser.getUserType()).equals("1") || (returnUser.getUserType().equals("2"))){
             return returnUser;
         }
         //获取考试场次id
-        Integer testId = this.userDao.getTestId(returnUser.getId());
+        Integer testId = this.userDao.getTalentId(returnUser.getId());
         //查看是否过期
         Examination examination = this.userDao.getExamination(testId);
         Date date = new Date();

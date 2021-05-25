@@ -16,5 +16,9 @@ public interface IndividualTestService {
 
     public void updateTalent(Talent talent);
 
-    public void saveImg(MultipartFile file);
+    public String saveImg(MultipartFile file);
+
+    public void savePicture(Picture picture);
+
+    public List findTalentList(ReceiveEntity receiveEntity);
 }
