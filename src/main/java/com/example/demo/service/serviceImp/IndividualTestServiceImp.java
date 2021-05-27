@@ -45,28 +45,33 @@ public class IndividualTestServiceImp implements IndividualTestService {
 
     public void setUserGrade(TestAnswerList testAnswerList) {
 //        this.individualTestDao.setUserGrade(testAnswer);
-        String personId = testAnswerList.getPersonId();
+        //将用户账号设置为过期
+        this.setUserTested(testAnswerList.getPersonId());
+        Integer personId = this.individualTestDao.findTalentId(Integer.valueOf(testAnswerList.getPersonId()));
         String testId = testAnswerList.getTestId();
         Integer grade = 0;
         for (int i = 0; i < testAnswerList.getTestAnswers().length; i++) {
             TestAnswer testAnswer = new TestAnswer();
-            testAnswer.setPersonId(personId);
+            testAnswer.setPersonId(String.valueOf(personId));
             testAnswer.setTestId(testId);
             testAnswer.setAnswer(testAnswerList.getTestAnswers()[i].getAnswer());
             testAnswer.setTrueAnswer(testAnswerList.getTestAnswers()[i].getTrueAnswer());
-            testAnswer.setProblemId(testAnswerList.getTestAnswers()[i].getId());
-            this.individualTestDao.saveUserAnswer(testAnswer);
-            if (testAnswer.getAnswer().equals(testAnswer.getTrueAnswer())) {
-                grade += testAnswerList.getTestAnswers()[i].getScore();
+            testAnswer.setProblemId(testAnswerList.getTestAnswers()[i].getProblemId());
+            testAnswer.setTitle(testAnswerList.getTestAnswers()[i].getTitle());
+            testAnswer.setType(testAnswerList.getTestAnswers()[i].getType());
+            testAnswer.setScore(testAnswerList.getTestAnswers()[i].getScore());
+            if(testAnswer.getAnswer()!=null && testAnswer.getTrueAnswer()!=null){
+                if (testAnswer.getAnswer().equals(testAnswer.getTrueAnswer())) {
+                    grade += testAnswerList.getTestAnswers()[i].getScore();
+                    testAnswer.setGrade(testAnswerList.getTestAnswers()[i].getScore());
+                }
             }
+            this.individualTestDao.saveUserAnswer(testAnswer);
         }
-        User user = new User();
-        user.setUserAccountId(Integer.valueOf(personId));
-        user.setGrade(grade.toString());
-        this.individualTestDao.setUserGrade(user);
-
-        //将用户账号设置为过期
-        this.setUserTested(personId);
+        Talent talent = new Talent();
+        talent.setId(personId);
+        talent.setGrade(grade.toString());
+        this.individualTestDao.setUserGrade(talent);
     }
 
     //用户已经考试过
@@ -91,7 +96,6 @@ public class IndividualTestServiceImp implements IndividualTestService {
     }
 
     public String saveImg(MultipartFile file) {
-        System.out.println(file);
         String fileName = file.getOriginalFilename();
         if (fileName.indexOf("\\") != -1) {
             fileName = fileName.substring(fileName.lastIndexOf("\\"));
@@ -113,49 +117,10 @@ public class IndividualTestServiceImp implements IndividualTestService {
         return filePath+fileName;
     }
 
-    public String GetImageStr(String imgFilePath) {// 将图片文件转化为字节数组字符串，并对其进行Base64编码处理
-        byte[] data = null;
-        // 读取图片字节数组
-        try {
-            InputStream in = new FileInputStream(imgFilePath);
-            data = new byte[in.available()];
-            in.read(data);
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // 对字节数组Base64编码
-        BASE64Encoder encoder = new BASE64Encoder();
-        return encoder.encode(data);// 返回Base64编码过的字节数组字符串
-    }
-
-    public static boolean GenerateImage(String imgStr, String imgFilePath) {// 对字节数组字符串进行Base64解码并生成图片
-        if (imgStr == null) // 图像数据为空
-            return false;
-        BASE64Decoder decoder = new BASE64Decoder();
-        try {
-            // Base64解码
-            byte[] bytes = decoder.decodeBuffer(String.valueOf(imgStr));
-            for (int i = 0; i < bytes.length; ++i) {
-                if (bytes[i] < 0) {// 调整异常数据
-                    bytes[i] += 256;
-                }
-            }
-            // 生成jpeg图片
-            OutputStream out = new FileOutputStream(imgFilePath);
-            out.write(bytes);
-            out.flush();
-            out.close();
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
     //数据库保存图片
     public void savePicture(Picture picture){
-       this.individualTestDao.savePicture(picture);
+        picture.setTalentId(this.individualTestDao.findTalentId(picture.getTalentId()));
+        this.individualTestDao.savePicture(picture);
     }
 
     //查找参考人员信息
@@ -169,4 +134,8 @@ public class IndividualTestServiceImp implements IndividualTestService {
         return ans;
     }
 
+    public Examination findExamByUserId(ReceiveEntity receiveEntity){
+        Integer examinationId = this.individualTestDao.findExamByUserId(receiveEntity.getTargetID());
+        return this.individualTestDao.findExamById(examinationId);
+    }
 }

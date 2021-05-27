@@ -71,4 +71,10 @@ public class IndividualTest {
     public void savePicture(@RequestBody Picture picture){
          this.individualTestService.savePicture(picture);
     }
+
+    //根据用户Id获取考试信息
+    @RequestMapping("/findExamByUserId")
+    public Examination findExamByUserId(@RequestBody ReceiveEntity receiveEntity){
+        return this.individualTestService.findExamByUserId(receiveEntity);
+    }
 }

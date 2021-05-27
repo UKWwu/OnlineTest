@@ -23,7 +23,7 @@
         set
         grade=#{grade}
         where
-        userAccountId = #{userAccountId}
+        id = #{id}
     </update>
 
     <select id="findExamTimeByUserId" parameterType="java.lang.Integer" resultType="com.example.demo.entity.Examination">
@@ -54,23 +54,16 @@
 
     <insert id="saveUserAnswer">
         insert into test_answer
-        (personId,testId,answer,remark,problemId,trueAnswer)
+        (personId,testId,answer,remark,problemId,trueAnswer,score,type,title,grade)
         VALUES
-        (#{personId},#{testId},#{answer},#{remark},#{problemId},#{trueAnswer})
-    </insert>
-
-    <insert id="saveImg">
-        insert into picture
-        (personId,testId,answer,remark,problemId,trueAnswer)
-        VALUES
-        (#{personId},#{testId},#{answer},#{remark},#{problemId},#{trueAnswer})
+        (#{personId},#{testId},#{answer},#{remark},#{problemId},#{trueAnswer},#{score},#{type},#{title},#{grade})
     </insert>
 
     <insert id="savePicture">
         insert into picture
-        (talentId,testId,picture)
+        (talentId,testId,picture,type)
         VALUES
-        (#{talentId},#{testId},#{picture})
+        (#{talentId},#{testId},#{picture},#{type})
     </insert>
 
     <update id="setUserTested">
@@ -94,5 +87,14 @@
         from test_person
         where
         userAccountId =#{targetID}
+    </select>
+
+    <select id="findExamById" resultType="com.example.demo.entity.Examination">
+        select
+        *
+        from
+        examination
+        where
+        id =#{examinationId}
     </select>
 </mapper>

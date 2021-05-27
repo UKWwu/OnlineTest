@@ -15,9 +15,9 @@
 
     <insert id="addQuestion" parameterType="com.example.demo.entity.Problem">
         insert into problem
-        (name,title,content,unit,problemType,answer,remark,time,unitName,selectKey,type)
+        (name,title,content,unit,problemType,answer,remark,time,unitName,selectKey,type,score)
         VALUES
-        (#{name},#{title},#{content},#{unit},#{problemType},#{answer},#{remark},#{time},#{unitName},#{selectKey},#{type})
+        (#{name},#{title},#{content},#{unit},#{problemType},#{answer},#{remark},#{time},#{unitName},#{selectKey},#{type},#{score})
     </insert>
 
     <select id="findQuestionById" parameterType="java.lang.Integer"
@@ -38,7 +38,8 @@
         time=#{time},
         unitName=#{unitName},
         selectKey = #{selectKey},
-        type = #{type}
+        type = #{type},
+        score = #{score}
         where
         id = #{id}
     </update>

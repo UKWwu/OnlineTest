@@ -20,7 +20,7 @@ public interface IndividualTestDao {
 
     public Problem findExam(Integer id);
 
-    public void setUserGrade(User user);
+    public void setUserGrade(Talent talent);
 
     public Talent findTalent(Integer targetID);
 
@@ -30,12 +30,12 @@ public interface IndividualTestDao {
 
     public void setUserTested(String personId);
 
-    public void saveImg(String s);
-
     public void savePicture(Picture picture);
     
 
     public Integer findTalentId(Integer targetID);
 
     public List<UserAndExam> findUser(ReceiveEntity receiveEntity);
+
+    public Examination findExamById(Integer examinationId);
 }

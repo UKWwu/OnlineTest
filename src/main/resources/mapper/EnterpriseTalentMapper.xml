@@ -49,4 +49,49 @@
         select * from talent_pool
         where id = #{targetID}
     </select>
+
+    <select id="findExamByTalentId" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.UserAndExam">
+        select userId from test_person
+        where examinationId = #{targetID}
+    </select>
+
+    <select id="findTalentSimpleQuestion" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.TestAnswer">
+        select * from test_answer
+        where personId = #{targetID}
+        and
+        type = "问答题"
+    </select>
+
+    <update id="updateTestAnswer">
+        update test_answer
+        set
+        personId=#{personId},
+        testId=#{testId},
+        answer=#{answer},
+        remark=#{remark},
+        problemId=#{problemId},
+        trueAnswer=#{trueAnswer},
+        grade = #{grade},
+        score = #{score},
+        type = #{type},
+        title = #{title}
+        where
+        id = #{id}
+    </update>
+
+    <select id="getTalentGrade" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select
+        grade
+        from test_answer
+        where personId = #{personId}
+    </select>
+
+    <update id="updateUserGrade">
+        update talent_pool
+        set
+        grade = #{grade}
+        where
+        id = #{id}
+    </update>
+
 </mapper>

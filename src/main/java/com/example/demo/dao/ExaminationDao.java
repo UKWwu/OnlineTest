@@ -46,4 +46,8 @@ public interface ExaminationDao {
     public List<UserAndExam> findUserData(ReceiveEntity receiveEntity);
 
     public User findUserById(Integer userAccountId);
+
+    public void updateTalentTest(Talent talent);
+
+    public Examination findExaminationById(Integer targetID);
 }

@@ -1,6 +1,9 @@
 package com.example.demo.dao;
 
 import com.example.demo.entity.Enterprise;
+import com.example.demo.entity.Picture;
+import com.example.demo.entity.ReceiveEntity;
+import com.example.demo.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -17,4 +20,8 @@ public interface EnterpriseDao {
     public List<Enterprise> findAllEnterprise();
 
     public void changeRecommend(Enterprise enterprise);
+
+    public List<Picture> findPictureSrc(ReceiveEntity receiveEntity);
+
+    public User getAccountNameById(Integer userAccountId);
 }

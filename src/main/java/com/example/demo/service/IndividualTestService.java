@@ -21,4 +21,6 @@ public interface IndividualTestService {
     public void savePicture(Picture picture);
 
     public List findTalentList(ReceiveEntity receiveEntity);
+
+    public Examination findExamByUserId(ReceiveEntity receiveEntity);
 }

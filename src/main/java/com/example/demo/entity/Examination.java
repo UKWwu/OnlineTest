@@ -14,6 +14,9 @@ public class Examination {
     private Date continueTime;
     private Date endTime;
     private String userName;
+    private Integer pictureNumber;
+    private Integer limitNumber;
+
 
     public Integer getId() {
         return id;
@@ -101,5 +104,21 @@ public class Examination {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public Integer getPictureNumber() {
+        return pictureNumber;
+    }
+
+    public void setPictureNumber(Integer pictureNumber) {
+        this.pictureNumber = pictureNumber;
+    }
+
+    public Integer getLimitNumber() {
+        return limitNumber;
+    }
+
+    public void setLimitNumber(Integer limitNumber) {
+        this.limitNumber = limitNumber;
     }
 }

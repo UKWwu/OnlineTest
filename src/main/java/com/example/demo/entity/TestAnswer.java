@@ -9,6 +9,9 @@ public class TestAnswer {
     private Integer problemId;
     private String trueAnswer;
     private Integer score;
+    private Integer grade;
+    private String type;
+    private String title;
 
     public Integer getId() {
         return id;
@@ -72,5 +75,29 @@ public class TestAnswer {
 
     public void setScore(Integer score) {
         this.score = score;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Integer getGrade() {
+        return grade;
+    }
+
+    public void setGrade(Integer grade) {
+        this.grade = grade;
     }
 }

@@ -21,4 +21,14 @@
           where
           id = #{id}
     </update>
+
+    <select id="findPictureSrc" resultType="com.example.demo.entity.Picture">
+        select * from picture
+        where talentId = #{targetID}
+    </select>
+
+    <select id="getAccountNameById" resultType="com.example.demo.entity.User">
+        select * from user
+        where id = #{userAccountId}
+    </select>
 </mapper>

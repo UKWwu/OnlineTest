@@ -6,7 +6,7 @@
         select * from talent_pool
         where
         unit = #{userUnit}
-        ORDER BY cast(grade as UNSIGNED INTEGER) desc LIMIT 0,15
+        ORDER BY cast(grade as UNSIGNED INTEGER) desc LIMIT 0,10
     </select>
 
     <select id="findRatioById" parameterType="com.example.demo.entity.ReceiveEntity" resultType="java.lang.Integer">
@@ -20,13 +20,13 @@
     <select id="findExamination" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.Examination">
         select * from examination
         where unit = #{userUnit}
-        ORDER BY beginTime desc LIMIT #{page},#{number}
+        ORDER BY id desc LIMIT #{page},#{number}
     </select>
 
     <select id="findExaminationWithKey" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.Examination">
         select * from examination
         where unit = #{userUnit} and `status` = #{key}
-        ORDER BY beginTime desc LIMIT #{page},#{number}
+        ORDER BY id desc LIMIT #{page},#{number}
     </select>
 
     <select id="findExaminationNumber" parameterType="com.example.demo.entity.ReceiveEntity" resultType="java.lang.Integer">
@@ -49,9 +49,9 @@
 
     <insert id="addExamination" useGeneratedKeys="true" keyProperty="id" parameterType="com.example.demo.entity.Examination">
         insert into examination
-        (name,beginTime,status,type,unit,continueTime,remark,endTime,questionNumber)
+        (name,beginTime,status,type,unit,continueTime,remark,endTime,questionNumber,pictureNumber,limitNumber)
         VALUES
-        (#{name},#{beginTime},#{status},#{type},#{unit},#{continueTime},#{remark},#{endTime},#{questionNumber})
+        (#{name},#{beginTime},#{status},#{type},#{unit},#{continueTime},#{remark},#{endTime},#{questionNumber},#{pictureNumber},#{limitNumber})
     </insert>
 
     <select id="findExamUser" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.User">
@@ -120,4 +120,17 @@
         select * from user
         where id = #{userAccountId}
     </select>
+
+    <select id="findExaminationById" parameterType="java.lang.Integer" resultType="com.example.demo.entity.Examination">
+        select * from examination
+        where id = #{targetID}
+    </select>
+
+    <update id="updateTalentTest">
+        update talent_pool
+        set
+        testId = #{testId}
+        where
+        id = #{id}
+    </update>
 </mapper>
