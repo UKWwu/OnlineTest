@@ -108,4 +108,11 @@ public class Examination {
     public void updateUserAndExam(@RequestBody com.example.demo.entity.UserAndExam userAndExam){
          this.examinationService.updateUserAndExam(userAndExam);
     }
+
+    //临时使用，生成数据
+    @RequestMapping("/lsspscsh")
+    public void lsspscsh(@RequestBody com.example.demo.entity.UserAndExam userAndExam){
+         this.examinationService.lsspscsh();
+    }
+
 }

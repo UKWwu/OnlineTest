@@ -37,4 +37,6 @@ public interface ExaminationService {
     public List findUserData(ReceiveEntity receiveEntity);
 
     public void updateUserAndExam(UserAndExam userAndExam);
+
+    public void lsspscsh();
 }

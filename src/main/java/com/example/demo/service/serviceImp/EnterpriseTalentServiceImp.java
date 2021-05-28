@@ -8,8 +8,8 @@ import com.example.demo.entity.TestAnswer;
 import com.example.demo.entity.UserAndExam;
 import com.example.demo.service.EnterpriseTalentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+//import org.springframework.mail.SimpleMailMessage;
+//import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,8 +27,8 @@ public class EnterpriseTalentServiceImp implements EnterpriseTalentService {
     @Autowired
     private EnterpriseDao enterpriseDao;
 
-    @Autowired
-    private JavaMailSender javaMailSender;
+//    @Autowired
+//    private JavaMailSender javaMailSender;
 
     public List findTalentList(ReceiveEntity receiveEntity){
         receiveEntity.setUserUnit(this.getUnitByName(receiveEntity.getUserName()));
@@ -48,11 +48,13 @@ public class EnterpriseTalentServiceImp implements EnterpriseTalentService {
             talentList.add(talent);
         }
         for (int i = 0; i < talentList.size(); i++) {
-            for (int j = 0; j < talentList.size(); j++) {
-                if(Integer.valueOf(talentList.get(i).getGrade()) > Integer.valueOf(talentList.get(j).getGrade())){
-                    String temp = talentList.get(i).getGrade();
-                    talentList.get(i).setGrade(talentList.get(j).getGrade());
-                    talentList.get(j).setGrade(temp);
+            for (int j = i; j < talentList.size(); j++) {
+                if(talentList.get(i).getGrade() != null && talentList.get(j).getGrade() != null){
+                    if(Integer.valueOf(talentList.get(i).getGrade()) < Integer.valueOf(talentList.get(j).getGrade())){
+                        String temp = talentList.get(i).getGrade();
+                        talentList.get(i).setGrade(talentList.get(j).getGrade());
+                        talentList.get(j).setGrade(temp);
+                    }
                 }
             }
         }

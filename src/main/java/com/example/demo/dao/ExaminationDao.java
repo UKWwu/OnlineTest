@@ -50,4 +50,6 @@ public interface ExaminationDao {
     public void updateTalentTest(Talent talent);
 
     public Examination findExaminationById(Integer targetID);
+
+    public List<UserAndExam> findTestPersonByTestId(ReceiveEntity receiveEntity);
 }

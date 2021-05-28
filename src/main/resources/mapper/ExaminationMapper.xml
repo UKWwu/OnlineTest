@@ -70,7 +70,7 @@
     <select id="findEndTest"  resultType="com.example.demo.entity.Examination">
         select * from examination
         where unit = #{unit} and status = "已结束"
-        ORDER BY endTime desc
+        ORDER BY id desc
     </select>
 
     <delete id="deleteExam">
@@ -80,7 +80,7 @@
 
     <select id="findAllTalent" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.Talent">
         select * from talent_pool
-        where unit = #{userUnit}
+        where unit = #{userUnit} and testId is null
         ORDER BY id desc
     </select>
 
@@ -133,4 +133,9 @@
         where
         id = #{id}
     </update>
+
+    <select id="findTestPersonByTestId" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.UserAndExam">
+        select * from test_person
+        where examinationId = #{targetID}
+    </select>
 </mapper>

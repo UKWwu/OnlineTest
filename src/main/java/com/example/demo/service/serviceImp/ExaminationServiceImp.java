@@ -1,21 +1,22 @@
 package com.example.demo.service.serviceImp;
 
+import com.example.demo.dao.*;
 import com.example.demo.entity.*;
-import com.example.demo.dao.EnterpriseDao;
-import com.example.demo.dao.ExaminationDao;
 import com.example.demo.service.ExaminationService;
-import com.example.demo.dao.UserDao;
-import com.example.demo.dao.EnterpriseQuestionDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 
 @Service
@@ -35,9 +36,12 @@ public class ExaminationServiceImp implements ExaminationService {
     @Autowired
     private EnterpriseQuestionDao enterpriseQuestionDao;
 
-
     @Autowired
-    private JavaMailSender javaMailSender;
+    private EnterpriseTalentDao enterpriseTalentDao;
+
+
+//    @Autowired
+//    private JavaMailSender javaMailSender;
 
     public List findBestStudent(ReceiveEntity receiveEntity) {
         receiveEntity.setUserUnit(this.getUnitByName(receiveEntity.getUserName()));
@@ -47,14 +51,16 @@ public class ExaminationServiceImp implements ExaminationService {
 
     public List findRatioById(ReceiveEntity receiveEntity) {
         List<ResultEntity> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             ResultEntity resultEntity = new ResultEntity();
             receiveEntity.setMax(10 + i * 10);
             resultEntity.setName("分数在" + (i * 10) + "，" + (10 + i * 10) + "区间");
             receiveEntity.setMin(i * 10);
 
             resultEntity.setValue(this.examinationDao.findRatioById(receiveEntity));
-            list.add(resultEntity);
+            if(resultEntity.getValue() != 0){
+                list.add(resultEntity);
+            }
         }
         return list;
     }
@@ -134,7 +140,11 @@ public class ExaminationServiceImp implements ExaminationService {
             emaiEntity.setEndTime(examination.getEndTime());
             emaiEntity.setContinueTime(examination.getContinueTime());
             emaiEntity.setTestName(examination.getName());
-            this.sendSimpleMail(emaiEntity);
+            try {
+                this.sendSimpleMail(emaiEntity);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return ans;
     }
@@ -190,6 +200,14 @@ public class ExaminationServiceImp implements ExaminationService {
     //删除笔试
     public void deleteExam(ReceiveEntity receiveEntity) {
         this.examinationDao.deleteExam(receiveEntity);
+
+        //删除相关的人员和信息
+        List<UserAndExam> userAndExam = this.examinationDao.findTestPersonByTestId(receiveEntity);
+        for (int i = 0; i < userAndExam.size(); i++) {
+            ReceiveEntity receiveEntity1 = new ReceiveEntity();
+            receiveEntity1.setTargetID(userAndExam.get(i).getUserId());
+            this.enterpriseTalentDao.deleteTalent(receiveEntity1);
+        }
     }
 
     //新建时查询人才库
@@ -231,36 +249,89 @@ public class ExaminationServiceImp implements ExaminationService {
 
 
     //发送邮件测试
-    public void sendSimpleMail(EmaiEntity email) {
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
-        // 构建一个邮件对象
-        SimpleMailMessage message = new SimpleMailMessage();
-        // 设置邮件主题
+    public void sendSimpleMail(EmaiEntity email) throws Exception{
+        Properties prop = new Properties();
+        prop.setProperty("mail.host", "smtp.sohu.com");
+        prop.setProperty("mail.transport.protocol", "smtp");
+        prop.setProperty("mail.smtp.auth", "true");
+        //使用JavaMail发送邮件的5个步骤
+        //1、创建session
+        Session session = Session.getInstance(prop);
+        //开启Session的debug模式，这样就可以查看到程序发送Email的运行状态
+        session.setDebug(true);
+        //2、通过session得到transport对象
+        Transport ts = session.getTransport();
+        //3、使用邮箱的用户名和密码连上邮件服务器，发送邮件时，发件人需要提交邮箱的用户名和密码给smtp服务器，用户名和密码都通过验证之后才能够正常发送邮件给收件人。
+        ts.connect("smtp.qq.com", "1632846188@qq.com", "dbptkptdexdwbaea");
+        //4、创建邮件
+        Message message = new MimeMessage(session);
+        //指明邮件的发件人
+        message.setFrom(new InternetAddress("1632846188@qq.com"));
+        //指明邮件的收件人，现在发件人和收件人是一样的，那就是自己给自己发
+        message.setRecipient(Message.RecipientType.TO, new InternetAddress(email.getEmail()));
+        //邮件的标题
         message.setSubject("欢迎参加"+ email.getTestName());
-        // 设置邮件发送者，这个跟application.yml中设置的要一致
-        message.setFrom("1632846188@qq.com");
-        // 设置邮件接收者，可以有多个接收者，中间用逗号隔开，以下类似
-        // message.setTo("10*****16@qq.com","12****32*qq.com");
-        message.setTo(email.getEmail());
-        // 设置邮件抄送人，可以WW有多个抄送人
-//        message.setCc("12****32*qq.com");
-        // 设置隐秘抄送人，可以有多个
-//        message.setBcc("7******9@qq.com");
-        // 设置邮件发送日期
-        message.setSentDate(new Date());
-        // 设置邮件的正文
+        //邮件的文本内容
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
         String content = "";
-        content += "亲爱的"+email.getName()+"\n";
-        content += "恭喜你进入笔试阶段\n";
+        content += "亲爱的"+email.getName()+"<br>";
+        content += "恭喜你进入笔试阶段<br>";
         String beginTime=simpleDateFormat.format(email.getBeginTime());
-        content += "笔试开始时间为"+beginTime+"\n";
+        content += "笔试开始时间为"+beginTime+"<br>";
         String endTime = simpleDateFormat.format(email.getEndTime());
-        content += "结束时间为"+endTime+"\n";
-        content += "账号名:"+email.getAccountName()+"\n";
-        content += "密码:"+email.getPassword()+"\n";
-        content += "考试地址为:"+email.getRoute()+"\n";
-        message.setText(content);
-        // 发送邮件
-        javaMailSender.send(message);
+        content += "结束时间为"+endTime+"<br>";
+        content += "账号名:"+email.getAccountName()+"<br>";
+        content += "密码:"+email.getPassword()+"<br>";
+        content += "考试地址为:"+email.getRoute()+"<br>";
+        message.setContent(content, "text/html;charset=UTF-8");
+
+        //5、发送邮件
+        ts.sendMessage(message, message.getAllRecipients());
+        ts.close();
+
+//        // 构建一个邮件对象
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        // 设置邮件主题
+//        message.setSubject("欢迎参加"+ email.getTestName());
+//        // 设置邮件发送者，这个跟application.yml中设置的要一致
+//        message.setFrom("1632846188@qq.com");
+//        // 设置邮件接收者，可以有多个接收者，中间用逗号隔开，以下类似
+//        // message.setTo("10*****16@qq.com","12****32*qq.com");
+//        message.setTo(email.getEmail());
+//        // 设置邮件抄送人，可以WW有多个抄送人
+////        message.setCc("12****32*qq.com");
+//        // 设置隐秘抄送人，可以有多个
+////        message.setBcc("7******9@qq.com");
+//        // 设置邮件发送日期
+//        message.setSentDate(new Date());
+//        // 设置邮件的正文
+//        String content = "";
+//        content += "亲爱的"+email.getName()+"\n";
+//        content += "恭喜你进入笔试阶段\n";
+//        String beginTime=simpleDateFormat.format(email.getBeginTime());
+//        content += "笔试开始时间为"+beginTime+"\n";
+//        String endTime = simpleDateFormat.format(email.getEndTime());
+//        content += "结束时间为"+endTime+"\n";
+//        content += "账号名:"+email.getAccountName()+"\n";
+//        content += "密码:"+email.getPassword()+"\n";
+//        content += "考试地址为:"+email.getRoute()+"\n";
+//        message.setText(content);
+//        // 发送邮件
+//        javaMailSender.send(message);
+    }
+
+
+    //临时使用，生成数据
+    public void lsspscsh(){
+        ReceiveEntity receiveEntity = new ReceiveEntity();
+        receiveEntity.setTargetID(118);
+        List<Talent> list = this.enterpriseTalentDao.findTalentByExamId(receiveEntity);
+        for (int i = 0; i < list.size(); i++) {
+            Picture picture = new Picture();
+            picture.setTalentId(list.get(i).getId());
+            for (int j = 0; j < 12; j++) {
+                this.enterpriseTalentDao.savePicture(picture);
+            }
+        }
     }
 }

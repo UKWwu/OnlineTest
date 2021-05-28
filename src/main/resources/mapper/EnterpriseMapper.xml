@@ -31,4 +31,5 @@
         select * from user
         where id = #{userAccountId}
     </select>
+
 </mapper>

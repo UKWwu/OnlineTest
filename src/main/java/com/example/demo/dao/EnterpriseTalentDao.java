@@ -1,9 +1,6 @@
 package com.example.demo.dao;
 
-import com.example.demo.entity.ReceiveEntity;
-import com.example.demo.entity.Talent;
-import com.example.demo.entity.TestAnswer;
-import com.example.demo.entity.UserAndExam;
+import com.example.demo.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -33,4 +30,8 @@ public interface EnterpriseTalentDao {
     public List<Integer> getTalentGrade(Integer personId);
 
     public void updateUserGrade(Talent talent);
+
+    public List<Talent> findTalentByExamId(ReceiveEntity receiveEntity);
+
+    public void savePicture(Picture picture);
 }

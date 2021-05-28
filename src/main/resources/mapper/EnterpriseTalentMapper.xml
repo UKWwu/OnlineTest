@@ -94,4 +94,17 @@
         id = #{id}
     </update>
 
+    <select id="findTalentByExamId" parameterType="com.example.demo.entity.ReceiveEntity" resultType="com.example.demo.entity.Talent">
+        select
+        *
+        from talent_pool
+        where testId = 118
+    </select>
+
+    <insert id="savePicture">
+         insert into picture
+        (talentId)
+        value
+        (#{talentId})
+    </insert>
 </mapper>
