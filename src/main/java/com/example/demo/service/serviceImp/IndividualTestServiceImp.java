@@ -33,11 +33,13 @@ public class IndividualTestServiceImp implements IndividualTestService {
         for (int i = 0; i < temp.size(); i++) {
             //该题目的内容
             Problem problem = this.individualTestDao.findExam(temp.get(i));
-            String[] lists = problem.getContent().split("&|&");
-            problem.setContentA(lists[0]);
-            problem.setContentB(lists[2]);
-            problem.setContentC(lists[4]);
-            problem.setContentD(lists[6]);
+            if(problem.getType().equals("选择题")){
+                String[] lists = problem.getContent().split("&|&");
+                problem.setContentA(lists[0]);
+                problem.setContentB(lists[2]);
+                problem.setContentC(lists[4]);
+                problem.setContentD(lists[6]);
+            }
             list.add(problem);
         }
         return list;

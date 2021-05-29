@@ -28,7 +28,7 @@ public class EnterpriseQuestionServiceImp implements EnterpriseQuestionService {
     }
 
     public void deleteQuestion(Integer id){
-        this.enterpriseQuestionDao.deleteQuestion(id);
+            this.enterpriseQuestionDao.deleteQuestion(id);
     }
     public void addQuestion(Problem problem){
         System.out.println(problem.getUnit());
